@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Force white background */
+body {
+  background-color: white !important;
+}
