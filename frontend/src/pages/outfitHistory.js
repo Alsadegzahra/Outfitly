@@ -1,20 +1,29 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const OutfitHistory = ({ history = [] }) => {
-  return (
-    <div>
-      <h2>Outfit History</h2>
-      {history.length === 0 ? (
-        <p>No outfits logged yet.</p>
-      ) : (
-        <ul>
-          {history.map((outfit, index) => (
-            <li key={index}>{outfit.date} - {outfit.items.join(", ")}</li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
+const OutfitHistory = () => {
+    const navigate = useNavigate();
+
+    return (
+        <div style={styles.container}>
+            <button onClick={() => navigate("/")} style={styles.homeButton}>🏠 Home</button>
+            <h2>Outfit History</h2>
+            <p>Feature under construction...</p>
+        </div>
+    );
+};
+
+const styles = {
+    container: {
+        textAlign: "center",
+        padding: "20px",
+    },
+    homeButton: {
+        margin: "10px",
+        padding: "10px",
+        fontSize: "16px",
+        cursor: "pointer",
+    },
 };
 
 export default OutfitHistory;
