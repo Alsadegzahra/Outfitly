@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const multer = require("multer");
+const multer = require("multer"); // ✅ Add this line if missing
 const Clothing = require("../models/Clothing");
+//const Outfit = require("../models/Outfit"); // ✅ Ensure this import is correct
+
 
 // Set up multer storage for image uploads
 const storage = multer.diskStorage({
@@ -76,13 +78,38 @@ async function handleClothingCreation(req, res) {
 
 // ✅ Route to get all clothing items
 router.get("/", async (req, res) => {
-    try {
-        const clothes = await Clothing.find();
-        res.json(clothes);
-    } catch (error) {
-        console.error("Error fetching clothing items:", error);
-        res.status(500).json({ error: "Error fetching clothing items" });
-    }
+  try {
+      const clothes = await Clothing.find(); // Fetch all clothing from MongoDB
+      res.json(clothes);
+  } catch (error) {
+      console.error("Error fetching clothing items:", error);
+      res.status(500).json({ error: "Error fetching clothing items" });
+  }
+});
+
+
+
+// ✅ DELETE Clothing Item & Remove Related Outfits
+router.delete("/delete/:id", async (req, res) => {
+  try {
+      const clothingId = req.params.id;
+
+      // Delete the clothing item
+      const deletedItem = await Clothing.findByIdAndDelete(clothingId);
+      if (!deletedItem) {
+          return res.status(404).json({ error: "Clothing item not found" });
+      }
+
+      // ✅ Delete any outfits that include this clothing item
+      await Outfit.deleteMany({ items: clothingId });
+
+      res.json({ message: "Clothing item and related outfits deleted successfully." });
+  } catch (error) {
+      console.error("Error deleting clothing:", error);
+      res.status(500).json({ error: "Error deleting clothing item." });
+  }
 });
 
 module.exports = router;
+
+
