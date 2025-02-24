@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer"); // ✅ Add this line if missing
 const Clothing = require("../models/Clothing");
-//const Outfit = require("../models/Outfit"); // ✅ Ensure this import is correct
+const Outfit = require("../models/Outfit"); // ✅ Ensure this import is correct
 
 
 // Set up multer storage for image uploads
@@ -109,6 +109,18 @@ router.delete("/delete/:id", async (req, res) => {
       res.status(500).json({ error: "Error deleting clothing item." });
   }
 });
+
+router.get("/:id", async (req, res) => {
+  try {
+      const clothingItem = await Clothing.findById(req.params.id);
+      if (!clothingItem) return res.status(404).json({ error: "Clothing item not found" });
+      res.json(clothingItem);
+  } catch (error) {
+      console.error("Error fetching clothing item:", error);
+      res.status(500).json({ error: "Error fetching clothing item." });
+  }
+});
+
 
 module.exports = router;
 
