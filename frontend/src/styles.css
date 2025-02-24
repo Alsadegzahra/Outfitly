@@ -1,0 +1,299 @@
+/* ✅ Global Styles for Outfitly */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+html, body {
+  font-family: 'Poppins', sans-serif;
+  background: white;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  transition: all 0.3s ease-in-out;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* ✅ Navbar Styling */
+.navbar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+  padding: 20px 0;
+  background: white;
+  position: relative;
+  top: 0;
+  left: 0;
+  transform: none;
+}
+
+.logo {
+  height: 120px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  display: block;
+  align-self: center;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.navbar-links {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 90vw;
+  overflow-x: hidden;
+}
+
+.nav-button {
+  text-decoration: none;
+  font-weight: 500;
+  color: #333;
+  background: #F8AFA6;
+  padding: 12px 18px;
+  border-radius: 8px;
+  transition: background 0.3s ease-in-out, transform 0.2s;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-button:hover {
+  background: #f4978e;
+  transform: scale(1.05);
+}
+
+/* ✅ Forms & Input Styling (Login, Sign Up, Add Clothing) */
+.auth-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.auth-container h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.auth-container input, .auth-container select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.auth-container button {
+    width: 100%;
+    padding: 10px;
+    background: #F8AFA6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.auth-container button:hover {
+    background: #E48D88;
+}
+
+/* ✅ Shared Card Styling (Closet, Search, Outfit History) */
+.card-item {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 220px;
+    margin: 10px;
+}
+
+.card-item h3 {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.card-item p {
+    font-size: 14px;
+    color: #555;
+}
+
+.closet-image, .search-image {
+    width: 100%;
+    border-radius: 5px;
+}
+
+/* ✅ Delete Button */
+.delete-button {
+    background: #E74C3C;
+    color: white;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 5px;
+    width: 100%;
+}
+
+.delete-button:hover {
+    background: #C0392B;
+}
+
+/* ✅ Search Bar Styling */
+.auth-input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* ✅ Outfit History */
+.outfit-card {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+    margin: 15px auto;
+}
+
+.outfit-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.outfit-item {
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    width: 100px;
+}
+
+.outfit-item p {
+    font-size: 14px;
+    color: #555;
+}
+
+/* ✅ Popup Styling */
+.popup {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -20%);
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+    border-radius: 8px;
+}
+
+.popup-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.clothing-item {
+    cursor: pointer;
+    padding: 10px;
+    text-align: center;
+    width: 120px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+.clothing-item.selected {
+    border: 2px solid #007bff;
+}
+
+/* ✅ Close Button */
+.close-button {
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    background: #0056b3;
+}
+
+.home-container {
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.home-container h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.home-section {
+    width: 80%;
+    max-width: 500px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #f8f8f8;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.items-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 90vw;
+    overflow-x: hidden;
+}
+
+.item {
+    text-align: center;
+}
+
+.item img {
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+}

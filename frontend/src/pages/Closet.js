@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import "../styles.css"; // ✅ Import global styles
 
 const Closet = () => {
-    const navigate = useNavigate();
     const [clothingItems, setClothingItems] = useState([]);
 
     // ✅ Fetch wardrobe items from backend
@@ -39,18 +38,17 @@ const Closet = () => {
     };
 
     return (
-        <div>
-            <button onClick={() => navigate("/")} style={styles.homeButton}>🏠 Home</button>
+        <div className="auth-container">
             <h2>My Wardrobe</h2>
-            <div style={styles.clothingContainer}>
+            <div className="closet-container">
                 {clothingItems.length > 0 ? (
                     clothingItems.map((item) => (
-                        <div key={item._id} style={styles.clothingItem}>
-                            <img src={item.image || "https://via.placeholder.com/150"} alt={item.name} style={styles.image} />
+                        <div key={item._id} className="closet-item">
+                            <img src={item.image || "https://via.placeholder.com/150"} alt={item.name} className="closet-image" />
                             <h3>{item.name}</h3>
                             <p>Category: {item.category}</p>
                             <p>Color: {item.color}</p>
-                            <button onClick={() => deleteClothingItem(item._id)} style={styles.deleteButton}>🗑️ Delete</button>
+                            <button onClick={() => deleteClothingItem(item._id)} className="delete-button">🗑️ Delete</button>
                         </div>
                     ))
                 ) : (
@@ -59,14 +57,6 @@ const Closet = () => {
             </div>
         </div>
     );
-};
-
-const styles = {
-    homeButton: { margin: "10px", padding: "10px", fontSize: "16px", cursor: "pointer" },
-    clothingContainer: { display: "flex", flexWrap: "wrap", marginTop: "20px" },
-    clothingItem: { border: "1px solid #ddd", margin: "10px", padding: "10px", width: "200px", textAlign: "center" },
-    image: { width: "100%", borderRadius: "5px" },
-    deleteButton: { backgroundColor: "red", color: "white", padding: "5px", border: "none", cursor: "pointer", marginTop: "5px" },
 };
 
 export default Closet;
