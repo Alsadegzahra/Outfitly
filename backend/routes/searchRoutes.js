@@ -7,16 +7,8 @@ const Outfit = require("../models/Outfit");
 router.get("/search", async (req, res) => {
     try {
         const query = req.query.q;
-
-        // ✅ Only return items that still exist in the database
-        const items = await Clothing.find({ 
-            name: { $regex: query, $options: "i" } 
-        });
-
-        const outfits = await Outfit.find({ 
-            name: { $regex: query, $options: "i" } 
-        });
-
+        const items = await Clothing.find({ name: { $regex: query, $options: "i" } });
+        const outfits = await Outfit.find({ name: { $regex: query, $options: "i" } });
         res.json({ items, outfits });
     } catch (error) {
         res.status(500).json({ error: "Error searching" });

@@ -30,7 +30,7 @@ const AddClothing = () => {
         const newItem = { name, category, color, image };
 
         try {
-            const response = await fetch("http://localhost:5000/api/clothing/add", {
+            const response = await fetch("http://localhost:5000/api/clothing/items", {  // ✅ Correct route
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(newItem),

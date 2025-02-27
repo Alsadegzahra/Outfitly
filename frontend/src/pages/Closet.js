@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "../styles.css"; // ✅ Import global styles
+import "../styles.css"; 
 
 const Closet = () => {
     const [clothingItems, setClothingItems] = useState([]);
 
-    // ✅ Fetch wardrobe items from backend
     useEffect(() => {
         fetch("http://localhost:5000/api/clothing")
             .then(response => response.json())
@@ -12,12 +11,12 @@ const Closet = () => {
             .catch(error => console.error("Error fetching wardrobe:", error));
     }, []);
 
-    // ✅ Function to delete clothing item
+
     const deleteClothingItem = async (id) => {
         const confirmDelete = window.confirm("Are you sure you want to delete this item?");
         if (!confirmDelete) return;
 
-        // ✅ Optimistically update UI before backend response
+
         setClothingItems(prevItems => prevItems.filter(item => item._id !== id));
 
         try {
@@ -32,7 +31,6 @@ const Closet = () => {
             alert("Error deleting clothing item.");
             console.error("Error:", error);
 
-            // ❌ Revert UI if deletion fails
             setClothingItems(prevItems => [...prevItems, clothingItems.find(item => item._id === id)]);
         }
     };
@@ -44,7 +42,7 @@ const Closet = () => {
                 {clothingItems.length > 0 ? (
                     clothingItems.map((item) => (
                         <div key={item._id} className="closet-item">
-                            <img src={item.image || "https://via.placeholder.com/150"} alt={item.name} className="closet-image" />
+                            <img src={item.image || "/default-placeholder.png"} alt={item.name} className="closet-image" />
                             <h3>{item.name}</h3>
                             <p>Category: {item.category}</p>
                             <p>Color: {item.color}</p>

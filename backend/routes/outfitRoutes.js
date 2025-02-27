@@ -3,20 +3,25 @@ const router = express.Router();
 const Outfit = require("../models/Outfit");
 
 // ✅ Create a new outfit
-router.post("/outfits", async (req, res) => {
+router.post("/items", async (req, res) => {
     try {
-        const { name, items } = req.body;
-        const newOutfit = new Outfit({
-            name,
-            items,
-            createdAt: new Date(), // ✅ Ensure createdAt is set
-        });
-        await newOutfit.save();
-        res.status(201).json(newOutfit);
+        console.log("📩 Received:", req.body);  // Log incoming request
+        const { name, category, color, image } = req.body;
+
+        // Validate input
+        if (!name || !category || !color) {
+            return res.status(400).json({ error: "Missing required fields" });
+        }
+
+        const newItem = new Clothing({ name, category, color, image });
+        await newItem.save();
+        res.status(201).json(newItem);
     } catch (error) {
-        res.status(500).json({ error: "Error creating outfit" });
+        console.error("❌ Error adding item:", error);
+        res.status(500).json({ error: "Error adding item" });
     }
 });
+
 
 // ✅ Get all outfits
 router.get("/outfits", async (req, res) => {
@@ -25,16 +30,6 @@ router.get("/outfits", async (req, res) => {
         res.json(outfits);
     } catch (error) {
         res.status(500).json({ error: "Error fetching outfits" });
-    }
-});
-
-// ✅ Delete an outfit
-router.delete("/outfits/:id", async (req, res) => {
-    try {
-        await Outfit.findByIdAndDelete(req.params.id);
-        res.json({ message: "Outfit deleted" });
-    } catch (error) {
-        res.status(500).json({ error: "Error deleting outfit" });
     }
 });
 
