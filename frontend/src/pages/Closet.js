@@ -20,8 +20,8 @@ const Closet = () => {
         setClothingItems(prevItems => prevItems.filter(item => item._id !== id));
 
         try {
-            const response = await fetch(`http://localhost:5000/api/clothing/delete/${id}`, {
-                method: "DELETE",
+            const response = await fetch(`http://localhost:5000/api/clothing/items/${id}`, {  // ✅ Correct route
+            method: "DELETE"
             });
 
             if (!response.ok) {

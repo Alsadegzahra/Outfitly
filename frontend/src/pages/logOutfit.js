@@ -37,7 +37,7 @@ const LogOutfit = () => {
         const newOutfit = { name: outfitName, items: selectedItems.map(item => item._id) };
 
         try {
-            const response = await fetch("http://localhost:5000/api/outfits/add", {
+            const response = await fetch("http://localhost:5000/api/outfits", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(newOutfit),
@@ -73,7 +73,7 @@ const LogOutfit = () => {
                 {selectedItems.length > 0 ? (
                     selectedItems.map((item) => (
                         <div key={item._id} className="selected-item">
-                            <img src={item.image || "https://via.placeholder.com/100"} alt={item.name} className="closet-image" />
+                            <img src={item.image || "default-placeholder.png"} alt={item.name} className="closet-image" />
                             <p>{item.name}</p>
                         </div>
                     ))
@@ -95,7 +95,7 @@ const LogOutfit = () => {
                                     onClick={() => toggleSelection(item)}
                                     className={`clothing-item ${selectedItems.some(selected => selected._id === item._id) ? "selected" : ""}`}
                                 >
-                                    <img src={item.image || "https://via.placeholder.com/100"} alt={item.name} className="closet-image" />
+                                    <img src={item.image || "default-placeholder.png"} alt={item.name} className="closet-image" />
                                     <h4>{item.name}</h4>
                                 </div>
                             ))
