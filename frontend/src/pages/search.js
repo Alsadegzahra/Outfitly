@@ -1,111 +1,163 @@
 import React, { useState, useEffect } from "react";
+import { db } from "../firebase";
+import { collection, onSnapshot } from "firebase/firestore";
+import "../styles.css"; // ✅ Import global styles
 
 const Search = () => {
-    const [query, setQuery] = useState("");
+    const [queryInput, setQueryInput] = useState("");
+    const [category, setCategory] = useState("");
+    const [color, setColor] = useState("");
     const [clothingResults, setClothingResults] = useState([]);
     const [outfitResults, setOutfitResults] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [clothingMap, setClothingMap] = useState({});
+    const [outfits, setOutfits] = useState([]);
 
-    const fetchAllItems = async () => {
-        try {
-            const response = await fetch("http://localhost:5000/api/search?q=");
-            const data = await response.json();
-
-            console.log("🔍 Initial API Response:", data);
-
-            setClothingResults(data.clothing || []);
-            setOutfitResults(data.outfits || []);
-        } catch (error) {
-            console.error("❌ Error fetching search results:", error);
-        }
-    };
-
+    // 🔥 Load Clothing Data in Real-Time
     useEffect(() => {
-        fetchAllItems(); // ✅ Load all items when the page opens
+        const unsubscribeClothing = onSnapshot(collection(db, "clothing"), (clothingSnapshot) => {
+            const clothingData = {};
+            clothingSnapshot.forEach(doc => {
+                clothingData[doc.id] = { id: doc.id, ...doc.data() };
+            });
+
+            setClothingMap(clothingData);
+        });
+
+        return () => unsubscribeClothing();
     }, []);
 
-    const searchClothing = async () => {
-        if (!query.trim()) return fetchAllItems(); // ✅ If empty query, show everything
+    // 🔥 Load Outfit Data in Real-Time
+    useEffect(() => {
+        const unsubscribeOutfits = onSnapshot(collection(db, "outfits"), (outfitSnapshot) => {
+            const outfitData = outfitSnapshot.docs.map(doc => ({
+                id: doc.id,
+                name: doc.data().name,
+                items: doc.data().items || [],
+            }));
 
-        try {
-            const response = await fetch(`http://localhost:5000/api/search?q=${encodeURIComponent(query)}`);
-            const data = await response.json();
+            setOutfits(outfitData);
+        });
 
-            console.log("🔍 Search API Response:", data);
+        return () => unsubscribeOutfits();
+    }, []);
 
-            setClothingResults(data.clothing || []);
-            setOutfitResults(data.outfits || []);
-        } catch (error) {
-            console.error("❌ Error fetching search results:", error);
-        }
+    // 🔍 Search Clothing
+    const searchClothing = () => {
+        setLoading(true);
+        const results = Object.values(clothingMap).filter(item =>
+            (!queryInput || item.name.toLowerCase().includes(queryInput.toLowerCase())) &&
+            (!category || item.category.toLowerCase() === category.toLowerCase()) &&
+            (!color || item.color.toLowerCase() === color.toLowerCase())
+        );
+        setClothingResults(results);
+        setLoading(false);
+    };
+
+    // 🔍 Search Outfits
+    const searchOutfits = () => {
+        setLoading(true);
+        const results = outfits
+            .filter(outfit =>
+                !queryInput || outfit.name.toLowerCase().includes(queryInput.toLowerCase())
+            )
+            .map(outfit => ({
+                ...outfit,
+                items: outfit.items.map(itemId => clothingMap[itemId]).filter(Boolean),
+            }));
+
+        setOutfitResults(results);
+        setLoading(false);
+    };
+
+    // 🔍 Search All (Clothing + Outfits)
+    const searchAll = () => {
+        setClothingResults([]);
+        setOutfitResults([]);
+        searchClothing();
+        searchOutfits();
     };
 
     return (
-        <div>
-            <h2>Search Your Closet & Outfits</h2>
+        <div className="auth-container">
+            <h2>🔍 Search Your Closet & Outfits</h2>
+
+            {/* Search Input */}
             <input
                 type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
+                value={queryInput}
+                onChange={(e) => setQueryInput(e.target.value)}
                 placeholder="Search for clothing or outfits..."
-                style={{ padding: "10px", width: "80%" }}
+                className="search-bar"
             />
             <button 
-                onClick={searchClothing} 
-                style={{ padding: "10px", marginLeft: "5px", cursor: "pointer" }}
+                onClick={searchAll} 
+                className="auth-button"
+                disabled={loading}
             >
-                🔍 Search
+                {loading ? "Searching..." : "🔍 Search"}
             </button>
 
-            <div style={{ marginTop: "20px" }}>
+            {/* Filters */}
+            <div className="filters">
+                <select onChange={(e) => setCategory(e.target.value)} value={category}>
+                    <option value="">All Categories</option>
+                    <option value="Top">Top</option>
+                    <option value="Bottom">Bottom</option>
+                    <option value="Shoes">Shoes</option>
+                    <option value="Accessories">Accessories</option>
+                </select>
+
+                <select onChange={(e) => setColor(e.target.value)} value={color}>
+                    <option value="">All Colors</option>
+                    <option value="Red">Red</option>
+                    <option value="Blue">Blue</option>
+                    <option value="Green">Green</option>
+                </select>
+            </div>
+
+            <div className="results-container">
                 {/* ✅ Show Clothing Items */}
                 {clothingResults.length > 0 && (
                     <div>
-                        <h3>Clothing Items</h3>
-                        {clothingResults.map((item) => (
-                            <div key={item._id} style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
-                                <img 
-                                    src={item.image || "https://placehold.co/100"} 
-                                    alt={item.name} 
-                                    style={{ width: "80px", height: "80px", borderRadius: "5px" }}
-                                />
-                                <p>{item.name}</p>
-                            </div>
-                        ))}
+                        <h3>👕 Clothing Items</h3>
+                        <div className="results-grid">
+                            {clothingResults.map((item) => (
+                                <div key={item.id} className="result-card">
+                                    <img 
+                                        src={item.image || "https://placehold.co/100"} 
+                                        alt={item.name} 
+                                    />
+                                    <p>{item.name} - {item.category} - {item.color}</p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 )}
 
                 {/* ✅ Show Outfits */}
                 {outfitResults.length > 0 && (
                     <div>
-                        <h3>Outfits</h3>
-                        {outfitResults.map((outfit) => (
-                            <div key={outfit._id} style={{ border: "1px solid #ddd", padding: "10px", marginBottom: "10px" }}>
-                                <h4>{outfit.name}</h4>
-                                <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-                                    {outfit.items.length > 0 ? (
-                                        outfit.items.map((item) => (
-                                            <div key={item._id} style={{ textAlign: "center" }}>
-                                                <img 
-                                                    src={item.image || "https://placehold.co/80"} 
-                                                    alt={item.name} 
-                                                    style={{ width: "80px", height: "80px", borderRadius: "5px" }}
-                                                />
-                                                <p>{item.name}</p> {/* ✅ Show item names */}
+                        <h3>👗 Outfits</h3>
+                        <div className="results-grid">
+                            {outfitResults.map((outfit) => (
+                                <div key={outfit.id} className="result-card">
+                                    <h3>{outfit.name}</h3>
+                                    <div className="outfit-items">
+                                        {outfit.items.map((item) => (
+                                            <div key={item.id}>
+                                                <img src={item.image || "https://placehold.co/100"} alt={item.name} />
+                                                <p>{item.name}</p>
                                             </div>
-                                        ))
-                                    ) : (
-                                        <p>No items in this outfit.</p>
-                                    )}
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
                 )}
 
-                {/* ✅ Show message if no results */}
-                {clothingResults.length === 0 && outfitResults.length === 0 && (
-                    <p>No results found.</p>
-                )}
+                {clothingResults.length === 0 && outfitResults.length === 0 && !loading && <p className="no-results">⚠️ No results found.</p>}
             </div>
         </div>
     );

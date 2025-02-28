@@ -9,6 +9,7 @@ import OutfitHistory from "./pages/OutfitHistory";
 import Search from "./pages/Search";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
+import Logout from "./pages/Logout";
 import { motion } from "framer-motion";
 import "./styles.css";
 
@@ -33,6 +34,7 @@ const App = () => {
             <Route path="/search" element={<Search />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/logout" element={<Logout />} />
           </Routes>
         </motion.div>
       </div>

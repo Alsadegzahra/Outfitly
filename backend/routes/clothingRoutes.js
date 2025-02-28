@@ -1,38 +1,76 @@
 const express = require("express");
 const router = express.Router();
-const Clothing = require("../models/Clothing");
-const Outfit = require("../models/Outfit");
+const { db, storage } = require("../firebase"); // ✅ Import Firebase Firestore & Storage
+const { collection, addDoc, getDocs, doc, deleteDoc, query, where } = require("firebase/firestore");
+const { ref, deleteObject } = require("firebase/storage");
 
-// ✅ Add new item to closet
+// ✅ Add Clothing Item (Firestore)
 router.post("/items", async (req, res) => {
     try {
         const { name, category, color, image } = req.body;
-        const newItem = new Clothing({ name, category, color, image });
-        await newItem.save();
-        res.status(201).json(newItem);
+
+        if (!name || !category || !color || !image) {
+            return res.status(400).json({ error: "Missing required fields" });
+        }
+
+        const newItem = {
+            name,
+            category,
+            color,
+            image, // ✅ Firebase Storage Image URL
+            createdAt: new Date(),
+        };
+
+        const docRef = await addDoc(collection(db, "clothing"), newItem);
+        res.status(201).json({ id: docRef.id, ...newItem });
     } catch (error) {
-        res.status(500).json({ error: "Error adding item" });
+        console.error("❌ Error adding item:", error);
+        res.status(500).json({ error: "Internal Server Error" });
     }
 });
 
-// ✅ Get all items in closet
+// ✅ Get All Clothing Items (Firestore)
 router.get("/", async (req, res) => {
     try {
-        const items = await Clothing.find();
-        res.json(items);
+        const { category, color } = req.query;
+        let clothingQuery = collection(db, "clothing");
+        let filters = [];
+
+        if (category) filters.push(where("category", "==", category));
+        if (color) filters.push(where("color", "==", color));
+
+        if (filters.length > 0) clothingQuery = query(clothingQuery, ...filters);
+
+        const querySnapshot = await getDocs(clothingQuery);
+        const clothingItems = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+        res.json(clothingItems);
     } catch (error) {
-        res.status(500).json({ error: "Error fetching items" });
+        console.error("❌ Error fetching filtered clothing:", error);
+        res.status(500).json({ error: "Error fetching clothing" });
     }
 });
 
-// ✅ Delete item + Cascade Delete (Remove related outfits)
+// ✅ Delete Clothing Item (Firestore)
 router.delete("/items/:id", async (req, res) => {
     try {
         const itemId = req.params.id;
-        await Clothing.findByIdAndDelete(itemId);
-        await Outfit.deleteMany({ items: itemId });
-        res.json({ message: "Item and associated outfits deleted" });
+        const clothingRef = doc(db, "clothing", itemId);
+
+        // Delete item from Firestore
+        await deleteDoc(clothingRef);
+
+        // ✅ Find associated outfits and remove item references
+        const outfitQuerySnapshot = await getDocs(query(collection(db, "outfits"), where("items", "array-contains", itemId)));
+        outfitQuerySnapshot.forEach(async (outfitDoc) => {
+            const outfitData = outfitDoc.data();
+            const updatedItems = outfitData.items.filter(id => id !== itemId);
+            await updateDoc(doc(db, "outfits", outfitDoc.id), { items: updatedItems });
+        });
+
+        res.json({ message: "Item deleted and outfits updated" });
     } catch (error) {
+        console.error("❌ Error deleting item:", error);
         res.status(500).json({ error: "Error deleting item" });
     }
 });

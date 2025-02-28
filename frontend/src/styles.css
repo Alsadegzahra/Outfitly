@@ -297,3 +297,758 @@ html, body {
     height: 100px;
     border-radius: 5px;
 }
+
+
+/* ✅ Error Message */
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* ✅ File Upload */
+.file-upload {
+    display: block;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    background: #f8f8f8;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.file-upload input {
+    display: none;
+}
+
+/* ✅ Image Preview */
+.image-preview {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.image-preview img {
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ✅ Primary Button */
+.primary-button {
+    width: 100%;
+    padding: 12px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+
+.primary-button:hover {
+    background: #0056b3;
+}
+
+.primary-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+
+
+
+/* ✅ Closet Container */
+.closet-container {
+    text-align: center;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* ✅ Closet Title */
+.closet-container h2 {
+    font-size: 26px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* ✅ Closet Items Grid */
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* ✅ Grid Layout */
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* ✅ Closet Item Styling */
+.card-item {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+}
+
+.card-item:hover {
+    transform: scale(1.05);
+}
+
+.card-item img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+/* ✅ Buttons */
+.edit-button, .delete-button {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.edit-button {
+    background: #007BFF;
+    color: white;
+}
+
+.edit-button:hover {
+    background: #0056b3;
+}
+
+.delete-button {
+    background: #E74C3C;
+    color: white;
+}
+
+.delete-button:hover {
+    background: #C0392B;
+}
+
+/* ✅ Edit Form */
+.edit-form {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.edit-form input {
+    width: 90%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.primary-button {
+    width: 100%;
+    padding: 10px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+
+.primary-button:hover {
+    background: #0056b3;
+}
+
+/* ✅ No Items Found */
+.no-items {
+    font-style: italic;
+    color: #888;
+    margin-top: 20px;
+}
+
+/* ✅ Responsive */
+@media (max-width: 600px) {
+    .closet-container {
+        width: 90%;
+    }
+
+    .card-container {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* ✅ Smaller Grid for Mobile */
+    }
+
+    .card-item {
+        width: 160px;
+    }
+}
+
+
+
+/* ✅ Log Outfit Container */
+.auth-container {
+    text-align: center;
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ✅ Selected Items Section */
+.selected-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.selected-item {
+    background: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100px;
+}
+
+.selected-item img {
+    width: 80px;
+    height: 80px;
+    border-radius: 5px;
+}
+
+.selected-item p {
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* ✅ Clothing Selection Popup */
+.popup {
+    position: fixed;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -15%);
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 90%;
+    max-width: 350px;
+    border-radius: 8px;
+    z-index: 1000;
+}
+
+/* ✅ Clothing Items Grid */
+.popup-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+    justify-items: center;
+}
+
+/* ✅ Clothing Item Style */
+.clothing-item {
+    cursor: pointer;
+    padding: 10px;
+    text-align: center;
+    width: 100px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+.clothing-item img {
+    width: 80px;
+    height: 80px;
+    border-radius: 5px;
+}
+
+.clothing-item.selected {
+    border: 2px solid #007bff;
+    background: #f0f8ff;
+}
+
+/* ✅ Buttons */
+.auth-button, .save-button {
+    width: 100%;
+    padding: 12px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+
+.auth-button:hover, .save-button:hover {
+    background: #0056b3;
+}
+
+/* ✅ Close Popup Button */
+.close-button {
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.close-button:hover {
+    background: #218838;
+}
+
+/* ✅ Responsive */
+@media (max-width: 600px) {
+    .popup {
+        width: 95%;
+        max-width: 320px;
+    }
+
+    .popup-content {
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    }
+
+    .selected-item, .clothing-item {
+        width: 80px;
+    }
+
+    .clothing-item img, .selected-item img {
+        width: 70px;
+        height: 70px;
+    }
+}
+
+
+
+/* ✅ Outfit History Container */
+.auth-container {
+    text-align: center;
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ✅ Outfit Title */
+.auth-container h2 {
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* ✅ Outfit Grid */
+.outfit-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* ✅ Grid Layout */
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* ✅ Outfit Card */
+.outfit-card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+}
+
+.outfit-card:hover {
+    transform: scale(1.05);
+}
+
+.outfit-card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+/* ✅ Outfit Items */
+.outfit-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.outfit-item {
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    width: 100px;
+}
+
+.outfit-item img {
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+/* ✅ Delete Button */
+.auth-button {
+    width: 100%;
+    padding: 10px;
+    background: #E74C3C;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease-in-out;
+    margin-top: 10px;
+}
+
+.auth-button:hover {
+    background: #C0392B;
+}
+
+/* ✅ No Outfits Found */
+.no-outfits {
+    font-style: italic;
+    color: #888;
+    margin-top: 20px;
+}
+
+/* ✅ Responsive */
+@media (max-width: 600px) {
+    .outfit-container {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    }
+
+    .outfit-card {
+        width: 160px;
+    }
+
+    .outfit-item {
+        width: 80px;
+    }
+
+    .outfit-item img {
+        width: 70px;
+        height: 70px;
+    }
+}
+
+
+/* ✅ Search Container */
+.auth-container {
+    text-align: center;
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ✅ Search Title */
+.auth-container h2 {
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* ✅ Search Input */
+.search-bar {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* ✅ Filters */
+.filters {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.filters select {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* ✅ Search Button */
+.auth-button {
+    width: 100%;
+    padding: 10px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease-in-out;
+    margin-top: 10px;
+}
+
+.auth-button:hover {
+    background: #0056b3;
+}
+
+/* ✅ Clothing & Outfit Results */
+.results-container {
+    margin-top: 20px;
+}
+
+/* ✅ Clothing & Outfit Items */
+.result-card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+}
+
+.result-card:hover {
+    transform: scale(1.05);
+}
+
+/* ✅ Image Styling */
+.result-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+/* ✅ Grid Layout */
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* ✅ No Results */
+.no-results {
+    font-style: italic;
+    color: #888;
+    margin-top: 20px;
+}
+
+/* ✅ Responsive */
+@media (max-width: 600px) {
+    .results-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+}
+
+/* ✅ Auth Container */
+.auth-container {
+    text-align: center;
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ✅ Auth Title */
+.auth-container h2 {
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* ✅ Auth Input */
+.auth-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin: 8px 0;
+}
+
+/* ✅ Auth Button */
+.auth-button {
+    width: 100%;
+    padding: 10px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease-in-out;
+    margin-top: 10px;
+}
+
+.auth-button:hover {
+    background: #0056b3;
+}
+
+/* ✅ Logout Button */
+.logout-button {
+    background: #E74C3C;
+}
+
+.logout-button:hover {
+    background: #C0392B;
+}
+
+/* ✅ Error Message */
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* ✅ Responsive */
+@media (max-width: 600px) {
+    .auth-container {
+        width: 90%;
+    }
+}
+
+
+/* ✅ Divider */
+.divider {
+    margin: 15px 0;
+    border: 0;
+    height: 1px;
+    background: #ddd;
+}
+
+/* ✅ Google Button */
+.google-button {
+    width: 100%;
+    padding: 12px;
+    background: #4285F4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease-in-out;
+    margin-top: 10px;
+}
+
+.google-button:hover {
+    background: #357ae8;
+}
+
+
+/* ✅ Logout Container */
+.logout-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* ✅ Success Message */
+.success-message {
+    color: green;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    text-align: center;
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+}
+
+/* ✅ Logout Button */
+.logout-button {
+    background: #E74C3C;
+}
+
+.logout-button:hover {
+    background: #C0392B;
+}
+
+/* ✅ Home Container */
+.home-container {
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* ✅ Home Title */
+.home-container h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* ✅ Recent Outfit Section */
+.home-section {
+    width: 80%;
+    max-width: 500px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #f8f8f8;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* ✅ Outfit Items */
+.items-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 90vw;
+    overflow-x: hidden;
+}
+
+/* ✅ Individual Item */
+.item {
+    text-align: center;
+}
+
+.item img {
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
