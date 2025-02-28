@@ -26,7 +26,6 @@ The project follows a modular structure for maintainability and scalability:
 │
 │── README.md                # Project documentation
 │── .gitignore               # Git ignored files and folders
-│── .env                     # Environment variables (local setup)
 ```
 
 ## How to Run the Application Locally
