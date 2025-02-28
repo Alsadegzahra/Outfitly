@@ -79,14 +79,7 @@ npm start
 - Authentication: Sign up, log in, and log out using Firebase authentication.
 
 ## Run Tests
-Run Jest (unit) tests:
-```bash
-npm test
-```
-Run ESLint (static code analysis):
-```bash
-npm run lint
-```
+?
 
 ## Deployment
 ?
