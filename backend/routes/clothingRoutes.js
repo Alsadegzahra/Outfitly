@@ -1,10 +1,23 @@
 const express = require("express");
 const router = express.Router();
-const { db, storage } = require("../firebase"); // ✅ Import Firebase Firestore & Storage
-const { collection, addDoc, getDocs, doc, deleteDoc, query, where } = require("firebase/firestore");
-const { ref, deleteObject } = require("firebase/storage");
+const { db } = require("../firebase"); 
+const { collection, addDoc, getDocs, doc, deleteDoc, query, where } = require("firebase-admin/firestore");
 
-// ✅ Add Clothing Item (Firestore)
+
+/**
+ * @route POST /api/clothing/items
+ * @desc Add a new clothing item to Firestore
+ * @access Public
+ *
+ * @param {Object} req - Express request object.
+ * @param {Object} req.body - Clothing item details.
+ * @param {string} req.body.name - Name of the clothing item.
+ * @param {string} req.body.category - Category of the clothing item.
+ * @param {string} req.body.color - Color of the clothing item.
+ * @param {string} req.body.image - URL of the clothing item's image.
+ * @param {Object} res - Express response object.
+ * @returns {Object} - The newly created clothing item with its ID.
+ */
 router.post("/items", async (req, res) => {
     try {
         const { name, category, color, image } = req.body;
@@ -17,7 +30,7 @@ router.post("/items", async (req, res) => {
             name,
             category,
             color,
-            image, // ✅ Firebase Storage Image URL
+            image,
             createdAt: new Date(),
         };
 
@@ -29,7 +42,18 @@ router.post("/items", async (req, res) => {
     }
 });
 
-// ✅ Get All Clothing Items (Firestore)
+/**
+ * @route GET /api/clothing
+ * @desc Retrieve all clothing items from Firestore (with optional filtering)
+ * @access Public
+ *
+ * @param {Object} req - Express request object.
+ * @param {Object} req.query - Optional filters for retrieving clothing items.
+ * @param {string} [req.query.category] - Filter by clothing category.
+ * @param {string} [req.query.color] - Filter by clothing color.
+ * @param {Object} res - Express response object.
+ * @returns {Object[]} - List of clothing items.
+ */
 router.get("/", async (req, res) => {
     try {
         const { category, color } = req.query;
@@ -51,16 +75,24 @@ router.get("/", async (req, res) => {
     }
 });
 
-// ✅ Delete Clothing Item (Firestore)
+/**
+ * @route DELETE /api/clothing/items/:id
+ * @desc Delete a clothing item by ID and update associated outfits
+ * @access Public
+ *
+ * @param {Object} req - Express request object.
+ * @param {Object} req.params - Request parameters.
+ * @param {string} req.params.id - ID of the clothing item to delete.
+ * @param {Object} res - Express response object.
+ * @returns {Object} - Confirmation message.
+ */
 router.delete("/items/:id", async (req, res) => {
     try {
         const itemId = req.params.id;
         const clothingRef = doc(db, "clothing", itemId);
 
-        // Delete item from Firestore
         await deleteDoc(clothingRef);
 
-        // ✅ Find associated outfits and remove item references
         const outfitQuerySnapshot = await getDocs(query(collection(db, "outfits"), where("items", "array-contains", itemId)));
         outfitQuerySnapshot.forEach(async (outfitDoc) => {
             const outfitData = outfitDoc.data();

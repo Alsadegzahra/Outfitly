@@ -3,6 +3,12 @@ import { db } from "../firebase";
 import { collection, onSnapshot } from "firebase/firestore";
 import "../styles.css"; // ✅ Import global styles
 
+/**
+ * Search component allows users to search for clothing and outfits in real-time.
+ * 
+ * @component
+ * @returns {JSX.Element} - Rendered Search component.
+ */
 const Search = () => {
     const [queryInput, setQueryInput] = useState("");
     const [category, setCategory] = useState("");
@@ -13,7 +19,6 @@ const Search = () => {
     const [clothingMap, setClothingMap] = useState({});
     const [outfits, setOutfits] = useState([]);
 
-    // 🔥 Load Clothing Data in Real-Time
     useEffect(() => {
         const unsubscribeClothing = onSnapshot(collection(db, "clothing"), (clothingSnapshot) => {
             const clothingData = {};
@@ -27,7 +32,6 @@ const Search = () => {
         return () => unsubscribeClothing();
     }, []);
 
-    // 🔥 Load Outfit Data in Real-Time
     useEffect(() => {
         const unsubscribeOutfits = onSnapshot(collection(db, "outfits"), (outfitSnapshot) => {
             const outfitData = outfitSnapshot.docs.map(doc => ({
@@ -42,7 +46,9 @@ const Search = () => {
         return () => unsubscribeOutfits();
     }, []);
 
-    // 🔍 Search Clothing
+    /**
+     * Filters clothing items based on search input, category, and color.
+     */
     const searchClothing = () => {
         setLoading(true);
         const results = Object.values(clothingMap).filter(item =>
@@ -54,7 +60,9 @@ const Search = () => {
         setLoading(false);
     };
 
-    // 🔍 Search Outfits
+    /**
+     * Filters outfits based on search input and maps clothing items to them.
+     */
     const searchOutfits = () => {
         setLoading(true);
         const results = outfits
@@ -70,7 +78,9 @@ const Search = () => {
         setLoading(false);
     };
 
-    // 🔍 Search All (Clothing + Outfits)
+    /**
+     * Initiates search for both clothing and outfits.
+     */
     const searchAll = () => {
         setClothingResults([]);
         setOutfitResults([]);
@@ -82,7 +92,6 @@ const Search = () => {
         <div className="auth-container">
             <h2>🔍 Search Your Closet & Outfits</h2>
 
-            {/* Search Input */}
             <input
                 type="text"
                 value={queryInput}
@@ -98,7 +107,6 @@ const Search = () => {
                 {loading ? "Searching..." : "🔍 Search"}
             </button>
 
-            {/* Filters */}
             <div className="filters">
                 <select onChange={(e) => setCategory(e.target.value)} value={category}>
                     <option value="">All Categories</option>
@@ -117,7 +125,6 @@ const Search = () => {
             </div>
 
             <div className="results-container">
-                {/* ✅ Show Clothing Items */}
                 {clothingResults.length > 0 && (
                     <div>
                         <h3>👕 Clothing Items</h3>
@@ -135,7 +142,6 @@ const Search = () => {
                     </div>
                 )}
 
-                {/* ✅ Show Outfits */}
                 {outfitResults.length > 0 && (
                     <div>
                         <h3>👗 Outfits</h3>

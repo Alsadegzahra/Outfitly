@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
-
 import { collection, onSnapshot, addDoc } from "firebase/firestore";
-
 import { useNavigate } from "react-router-dom";
 import "../styles.css";
 
+/**
+ * LogOutfit component allows users to log and save outfits by selecting clothing items.
+ * 
+ * @component
+ * @returns {JSX.Element} - Rendered LogOutfit component.
+ */
 const LogOutfit = () => {
     const [clothingItems, setClothingItems] = useState([]);
     const [selectedItems, setSelectedItems] = useState([]);
@@ -14,7 +18,6 @@ const LogOutfit = () => {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
-    // Use real-time Firestore updates for faster loading
     useEffect(() => {
         console.time("Firestore Fetch (LogOutfit)");
         
@@ -28,9 +31,14 @@ const LogOutfit = () => {
             console.timeEnd("Firestore Fetch (LogOutfit)");
         });
 
-        return () => unsubscribe(); // Cleanup listener
+        return () => unsubscribe();
     }, []);
 
+    /**
+     * Toggles selection of a clothing item.
+     * 
+     * @param {Object} item - Clothing item object.
+     */
     const toggleSelection = (item) => {
         setSelectedItems((prev) => {
             const itemSet = new Set(prev.map(i => i.id));
@@ -40,6 +48,9 @@ const LogOutfit = () => {
         });
     };
 
+    /**
+     * Saves an outfit to Firestore with selected clothing items.
+     */
     const saveOutfit = async () => {
         if (selectedItems.length === 0 || !outfitName) {
             alert("❌ Please select items and name the outfit.");

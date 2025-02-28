@@ -1,9 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const { db } = require("../firebase"); // ✅ Import Firestore
-const { collection, addDoc, getDocs, doc, deleteDoc, query, where } = require("firebase/firestore");
+const { db } = require("../firebase"); 
+const { collection, addDoc, getDocs, doc, deleteDoc, query, where } = require("firebase-admin/firestore");
 
-// ✅ Create a New Outfit (Firestore)
+/**
+ * @route POST /api/outfits
+ * @desc Create a new outfit in Firestore
+ * @access Public
+ *
+ * @param {Object} req - Express request object.
+ * @param {Object} req.body - Outfit details.
+ * @param {string} req.body.name - Name of the outfit.
+ * @param {string[]} req.body.items - Array of clothing item IDs.
+ * @param {Object} res - Express response object.
+ * @returns {Object} - The newly created outfit with its ID.
+ */
 router.post("/", async (req, res) => {
     try {
         console.log("📩 Received Outfit Data:", req.body);
@@ -26,7 +37,18 @@ router.post("/", async (req, res) => {
     }
 });
 
-// ✅ Get All Outfits (Firestore)
+/**
+ * @route GET /api/outfits
+ * @desc Retrieve all outfits from Firestore
+ * @access Public
+ *
+ * @param {Object} req - Express request object.
+ * @param {Object} req.query - Optional filters for retrieving outfits.
+ * @param {string} [req.query.category] - Filter outfits by clothing category.
+ * @param {string} [req.query.color] - Filter outfits by clothing color.
+ * @param {Object} res - Express response object.
+ * @returns {Object[]} - List of outfits with associated clothing items.
+ */
 router.get("/", async (req, res) => {
     try {
         const { category, color } = req.query;
@@ -38,7 +60,6 @@ router.get("/", async (req, res) => {
                 const outfit = outfitDoc.data();
                 const itemRefs = outfit.items || [];
 
-                // Fetch associated clothing items from Firestore
                 const itemData = await Promise.all(
                     itemRefs.map(async (itemId) => {
                         const itemDoc = await getDocs(query(collection(db, "clothing"), where("id", "==", itemId)));
@@ -46,7 +67,6 @@ router.get("/", async (req, res) => {
                     })
                 );
 
-                // Apply category & color filters if provided
                 let filteredItems = itemData.filter(item => item);
                 if (category) filteredItems = filteredItems.filter(item => item.category === category);
                 if (color) filteredItems = filteredItems.filter(item => item.color === color);
@@ -62,7 +82,17 @@ router.get("/", async (req, res) => {
     }
 });
 
-// ✅ Delete an Outfit (Firestore)
+/**
+ * @route DELETE /api/outfits/:id
+ * @desc Delete an outfit by ID from Firestore
+ * @access Public
+ *
+ * @param {Object} req - Express request object.
+ * @param {Object} req.params - Request parameters.
+ * @param {string} req.params.id - ID of the outfit to delete.
+ * @param {Object} res - Express response object.
+ * @returns {Object} - Confirmation message.
+ */
 router.delete("/:id", async (req, res) => {
     try {
         const outfitId = req.params.id;

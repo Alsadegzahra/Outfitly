@@ -1,9 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const { db } = require("../firebase"); // ✅ Import Firestore
-const { collection, getDocs, query, where } = require("firebase/firestore");
+const { db } = require("../firebase"); 
+const { collection, getDocs, query, where } = require("firebase-admin/firestore");
 
-// ✅ Search for Clothing & Outfits in Firestore
+/**
+ * @route GET /api/search
+ * @desc Search for clothing items and outfits in Firestore based on query and filters
+ * @access Public
+ *
+ * @param {Object} req - Express request object.
+ * @param {string} [req.query.q] - Search query string.
+ * @param {string} [req.query.category] - Filter by clothing category.
+ * @param {string} [req.query.color] - Filter by clothing color.
+ * @param {Object} res - Express response object.
+ * @returns {Object} - Object containing matching clothing items and outfits.
+ */
 router.get("/", async (req, res) => {
     try {
         const searchQuery = req.query.q || "";
@@ -11,7 +22,6 @@ router.get("/", async (req, res) => {
 
         console.log("🔍 Search Query:", searchQuery, "🛍️ Filters:", { category, color });
 
-        // 🔹 Search Clothing in Firestore
         let clothingQuery = collection(db, "clothing");
         let clothingFilters = [];
 
@@ -27,7 +37,6 @@ router.get("/", async (req, res) => {
             ...doc.data(),
         }));
 
-        // 🔹 Search Outfits in Firestore
         const outfitQuery = collection(db, "outfits");
         const outfitSnapshot = await getDocs(outfitQuery);
 
@@ -36,7 +45,6 @@ router.get("/", async (req, res) => {
                 const outfit = outfitDoc.data();
                 const itemRefs = outfit.items || [];
 
-                // Fetch clothing items for the outfit
                 const itemData = await Promise.all(
                     itemRefs.map(async (itemId) => {
                         const itemDoc = await getDocs(query(collection(db, "clothing"), where("id", "==", itemId)));
@@ -44,14 +52,12 @@ router.get("/", async (req, res) => {
                     })
                 );
 
-                // Apply category & color filters if provided
                 let filteredItems = itemData.filter(item => item);
                 if (category) filteredItems = filteredItems.filter(item => item.category === category);
                 if (color) filteredItems = filteredItems.filter(item => item.color === color);
 
-                // 🔍 Match outfits based on searchQuery
                 if (searchQuery.trim() && !outfit.name.toLowerCase().includes(searchQuery.toLowerCase())) {
-                    return null; // Skip outfits that don't match the query
+                    return null;
                 }
 
                 return { id: outfitDoc.id, name: outfit.name, items: filteredItems };

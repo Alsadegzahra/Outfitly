@@ -6,8 +6,14 @@ import {
     doc, 
     deleteDoc 
 } from "firebase/firestore";
-import "../styles.css"; // ✅ Import global styles
+import "../styles.css";
 
+/**
+ * OutfitHistory component displays the user's logged outfits and allows deletion of outfits.
+ * 
+ * @component
+ * @returns {JSX.Element} - Rendered OutfitHistory component.
+ */
 const OutfitHistory = () => {
     const [outfits, setOutfits] = useState([]);
 
@@ -24,6 +30,11 @@ const OutfitHistory = () => {
         return () => unsubscribe();
     }, []);
 
+    /**
+     * Deletes an outfit from Firestore.
+     * 
+     * @param {string} outfitId - ID of the outfit to delete.
+     */
     const deleteOutfit = async (outfitId) => {
         if (!window.confirm("Are you sure you want to delete this outfit?")) return;
 

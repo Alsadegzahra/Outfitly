@@ -2,17 +2,27 @@ import React, { useState } from "react";
 import { auth } from "../firebase";
 import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import "../styles.css"; // ✅ Import global styles
+import "../styles.css"; 
 
+/**
+ * SignUp component allows users to create an account using email/password or Google authentication.
+ * 
+ * @component
+ * @returns {JSX.Element} - Rendered SignUp component.
+ */
 const SignUp = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const provider = new GoogleAuthProvider(); // ✅ Google Provider
+    const provider = new GoogleAuthProvider();
 
-    // ✅ Email & Password Sign-Up
+    /**
+     * Handles user sign-up with email and password.
+     * 
+     * @param {Object} e - Event object.
+     */
     const handleSignUp = async (e) => {
         e.preventDefault();
         setErrorMessage("");
@@ -21,19 +31,21 @@ const SignUp = () => {
         try {
             await createUserWithEmailAndPassword(auth, email, password);
             alert("✅ Sign-Up Successful! Redirecting...");
-            navigate("/closet"); // ✅ Redirect after sign-up
+            navigate("/closet");
         } catch (error) {
             setErrorMessage(`❌ ${error.message}`);
         }
         setLoading(false);
     };
 
-    // ✅ Google Sign-In
+    /**
+     * Handles sign-in using Google authentication.
+     */
     const handleGoogleSignIn = async () => {
         try {
             await signInWithPopup(auth, provider);
             alert("✅ Google Sign-In Successful! Redirecting...");
-            navigate("/closet"); // ✅ Redirect after Google login
+            navigate("/closet");
         } catch (error) {
             setErrorMessage(`❌ ${error.message}`);
         }
@@ -65,7 +77,7 @@ const SignUp = () => {
                 {loading ? "Signing Up..." : "🔐 Sign Up"}
             </button>
 
-            <hr className="divider" /> {/* ✅ Divider for UI */}
+            <hr className="divider" /> 
             
             <button onClick={handleGoogleSignIn} className="google-button">
                 🟢 Sign Up with Google

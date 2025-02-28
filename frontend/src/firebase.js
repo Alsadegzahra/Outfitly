@@ -3,6 +3,10 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 
+/**
+ * Firebase configuration object containing API credentials.
+ * @constant {Object}
+ */
 const firebaseConfig = {
   apiKey: "AIzaSyB7Tz8OWEwUuHAJGUFcyLyYPn_t_7y1csw",
   authDomain: "outfitly-dbd69.firebaseapp.com",
@@ -13,10 +17,28 @@ const firebaseConfig = {
   measurementId: "G-B1MPW7HS4F"
 };
 
-// ✅ Initialize Firebase
+/**
+ * Initializes Firebase application with provided configuration.
+ * @constant {FirebaseApp}
+ */
 const app = initializeApp(firebaseConfig);
+
+/**
+ * Firestore database instance.
+ * @constant {Firestore}
+ */
 const db = getFirestore(app);
+
+/**
+ * Firebase authentication instance.
+ * @constant {Auth}
+ */
 const auth = getAuth(app);
+
+/**
+ * Firebase storage instance.
+ * @constant {Storage}
+ */
 const storage = getStorage(app);
 
 export { db, auth, storage };

@@ -10,8 +10,15 @@ import {
     query, 
     where 
 } from "firebase/firestore";
-import "../styles.css"; // ✅ Import global styles
+import "../styles.css";
 
+/**
+ * Closet component that displays the user's clothing collection.
+ * Allows users to edit or delete clothing items.
+ * 
+ * @component
+ * @returns {JSX.Element} - Rendered Closet component.
+ */
 const Closet = () => {
     const [clothing, setClothing] = useState([]);
     const [editItem, setEditItem] = useState(null);
@@ -26,11 +33,14 @@ const Closet = () => {
             }));
             setClothing(clothingData);
         });
-
         return () => unsubscribe();
     }, []);
 
-    // ✅ Edit Clothing Item (Updates Firestore & Outfits)
+    /**
+     * Edits an existing clothing item in Firestore.
+     * 
+     * @param {string} itemId - ID of the clothing item to edit.
+     */
     const editClothingItem = async (itemId) => {
         if (!newCategory && !newColor) return alert("Please enter a new category or color.");
 
@@ -42,7 +52,6 @@ const Closet = () => {
 
             await updateDoc(itemRef, updates);
 
-            // ✅ Update outfits that contain this item
             const outfitQuery = query(collection(db, "outfits"), where("items", "array-contains", itemId));
             const outfitSnapshot = await getDocs(outfitQuery);
 
@@ -64,7 +73,11 @@ const Closet = () => {
         }
     };
 
-    // ❌ Delete Clothing Item & Remove Related Outfits
+    /**
+     * Deletes a clothing item and any outfits containing it.
+     * 
+     * @param {string} itemId - ID of the clothing item to delete.
+     */
     const deleteClothingItem = async (itemId) => {
         if (!window.confirm("Are you sure you want to delete this item? This will also delete any outfits that used it!")) return;
 
@@ -88,7 +101,6 @@ const Closet = () => {
     return (
         <div className="closet-container">
             <h2>👗 My Closet</h2>
-
             <div className="card-container">
                 {clothing.length > 0 ? (
                     clothing.map((item) => (

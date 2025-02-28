@@ -13,6 +13,13 @@ import Logout from "./pages/Logout";
 import { motion } from "framer-motion";
 import "./styles.css";
 
+/**
+ * App component sets up routing and layout for the Outfitly application.
+ * It includes navigation, page transitions, and route definitions.
+ * 
+ * @component
+ * @returns {JSX.Element} - Rendered App component.
+ */
 const pageTransition = {
   initial: { opacity: 0, y: 10 },
   animate: { opacity: 1, y: 0, transition: { duration: 0.5 } },

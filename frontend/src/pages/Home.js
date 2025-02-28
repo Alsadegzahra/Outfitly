@@ -3,10 +3,16 @@ import { db } from "../firebase";
 import { collection, onSnapshot, doc, getDoc } from "firebase/firestore";
 import "../styles.css";
 
+/**
+ * Home component that displays the most recent outfit and most worn item.
+ * 
+ * @component
+ * @returns {JSX.Element} - Rendered Home component.
+ */
 const Home = () => {
     const [recentOutfit, setRecentOutfit] = useState(null);
     const [mostWornItem, setMostWornItem] = useState(null);
-    const [outfitsExist, setOutfitsExist] = useState(false); // ✅ Track if outfits exist
+    const [outfitsExist, setOutfitsExist] = useState(false);
 
     useEffect(() => {
         console.log("📡 Fetching outfits...");
@@ -15,11 +21,10 @@ const Home = () => {
             console.log("Fetched outfits:", outfits);
 
             if (outfits.length > 0) {
-                setOutfitsExist(true); // ✅ Mark that outfits exist
+                setOutfitsExist(true);
                 const sortedOutfits = outfits.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                 const latestOutfit = sortedOutfits[0];
 
-                // ✅ Fetch Item Details
                 const itemsWithDetails = await Promise.all(
                     latestOutfit.items.map(async (itemId) => {
                         const itemRef = doc(db, "clothing", itemId);
@@ -34,11 +39,11 @@ const Home = () => {
             }
         });
 
-        return () => unsubscribe(); // ✅ Cleanup Firestore listener
+        return () => unsubscribe();
     }, []);
 
     useEffect(() => {
-        if (!outfitsExist) return; // ✅ Don't fetch most worn item if no outfits
+        if (!outfitsExist) return;
 
         console.log("📡 Fetching most worn item...");
         const unsubscribe = onSnapshot(collection(db, "outfits"), async (snapshot) => {
@@ -70,13 +75,12 @@ const Home = () => {
         });
 
         return () => unsubscribe();
-    }, [outfitsExist]); // ✅ Only run if outfits exist
+    }, [outfitsExist]);
 
     return (
         <div className="home-container">
             <h2>Welcome to Outfitly</h2>
-
-            {!outfitsExist ? ( // ✅ If no outfits, show message
+            {!outfitsExist ? (
                 <p>⚠️ You have no outfits yet. Start logging your outfits!</p>
             ) : (
                 <>
@@ -99,7 +103,6 @@ const Home = () => {
                             </div>
                         </div>
                     )}
-
                     {mostWornItem && (
                         <div className="home-section">
                             <h3>🔥 Most Worn Item</h3>

@@ -2,18 +2,27 @@ import React, { useState } from "react";
 import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import "../styles.css"; // ✅ Import global styles
+import "../styles.css"; 
 
+/**
+ * Logout component that allows users to sign out and redirects them to the login page.
+ * 
+ * @component
+ * @returns {JSX.Element} - Rendered Logout component.
+ */
 const Logout = () => {
     const navigate = useNavigate();
-    const [logoutMessage, setLogoutMessage] = useState(""); // ✅ Logout message state
+    const [logoutMessage, setLogoutMessage] = useState("");
 
+    /**
+     * Handles user logout and redirects to the login page.
+     */
     const handleLogout = async () => {
         await signOut(auth);
-        setLogoutMessage("✅ Logged out successfully! Redirecting..."); // ✅ Show message
+        setLogoutMessage("✅ Logged out successfully! Redirecting..."); 
         setTimeout(() => {
-            setLogoutMessage(""); // ✅ Hide after 3 seconds
-            navigate("/login"); // ✅ Redirect after logout
+            setLogoutMessage(""); 
+            navigate("/login");
         }, 3000);
     };
 

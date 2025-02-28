@@ -2,17 +2,27 @@ import React, { useState } from "react";
 import { auth } from "../firebase";
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import "../styles.css"; // ✅ Import global styles
+import "../styles.css";
 
+/**
+ * Login component that allows users to sign in using email/password or Google authentication.
+ * 
+ * @component
+ * @returns {JSX.Element} - Rendered Login component.
+ */
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const provider = new GoogleAuthProvider(); // ✅ Google Provider
+    const provider = new GoogleAuthProvider();
 
-    // ✅ Email & Password Login
+    /**
+     * Handles login with email and password.
+     * 
+     * @param {Object} e - Event object.
+     */
     const handleLogin = async (e) => {
         e.preventDefault();
         setErrorMessage("");
@@ -21,19 +31,21 @@ const Login = () => {
         try {
             await signInWithEmailAndPassword(auth, email, password);
             alert("✅ Login Successful! Redirecting...");
-            navigate("/closet"); // ✅ Redirect after login
+            navigate("/closet");
         } catch (error) {
             setErrorMessage(`❌ ${error.message}`);
         }
         setLoading(false);
     };
 
-    // ✅ Google Sign-In
+    /**
+     * Handles login with Google authentication.
+     */
     const handleGoogleSignIn = async () => {
         try {
             await signInWithPopup(auth, provider);
             alert("✅ Google Sign-In Successful! Redirecting...");
-            navigate("/closet"); // ✅ Redirect after Google login
+            navigate("/closet");
         } catch (error) {
             setErrorMessage(`❌ ${error.message}`);
         }
@@ -65,7 +77,7 @@ const Login = () => {
                 {loading ? "Logging In..." : "🔑 Login"}
             </button>
 
-            <hr className="divider" /> {/* ✅ Divider for UI */}
+            <hr className="divider" />
             
             <button onClick={handleGoogleSignIn} className="google-button">
                 🟢 Login with Google
