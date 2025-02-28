@@ -1,110 +1,98 @@
-# Outfitly - Digital Closet & Outfit Manager
+# Outfitly
 
-## 📌 Project Overview
-Outfitly is a **full-stack web application** that helps users **manage their digital closet**, log outfits, and track their outfit history. Built using **React (frontend)** and **Node.js with Firebase Admin SDK (backend)**, Outfitly allows users to **add clothing, organize outfits, and search their wardrobe** efficiently.
+Outfitly is a digital closet and outfit management web app that helps users organize their wardrobe, log outfits, and track their outfit history. The app uses **React** for the frontend, **Node.js** with **Express** for the backend, and **Firebase** for authentication, Firestore database, and cloud storage.
 
-## 🚀 Features
-### **Frontend (React)**
-- 🏠 **Home Page**: Displays recent outfits and most worn clothing items.
-- 👕 **Closet**: View, edit, and delete clothing items.
-- ➕ **Add Clothing**: Upload new clothing items with images.
-- 📜 **Outfit History**: Track logged outfits with images and timestamps.
-- 🔍 **Search**: Filter clothing items and outfits based on name, category, or color.
-- 🔐 **Authentication**: User signup/login using email-password or Google Sign-In.
+## Project Structure
+The project follows a modular structure for maintainability and scalability:
 
-### **Backend (Node.js & Firebase Admin SDK)**
-- 🔥 **Firestore Database**: Stores clothing items, outfits, and user data.
-- 🗂 **Firebase Storage**: Handles image uploads for clothing items.
-- 📡 **REST API**:
-  - `POST /api/clothing` - Add clothing items
-  - `GET /api/clothing` - Fetch all clothing items
-  - `DELETE /api/clothing/:id` - Remove clothing items
-  - `POST /api/outfits` - Log an outfit
-  - `GET /api/outfits` - Fetch logged outfits
-  - `DELETE /api/outfits/:id` - Remove outfits
-  - `GET /api/search` - Search clothing & outfits
-- 🛠 **Authentication & Security**: Uses Firebase Admin SDK for secure backend operations.
-
-## 🛠️ Technologies Used
-### **Frontend**
-- React (with React Router & Framer Motion for animations)
-- Firebase Authentication (Google Sign-In & Email-Password login)
-- Tailwind CSS (for styling)
-
-### **Backend**
-- Node.js & Express (API handling)
-- Firebase Admin SDK (Firestore & Storage management)
-- Cors & dotenv (Environment setup)
-
-## 📂 Project Structure
 ```
-Outfitly/
+/Outfitly
 │── backend/
-│   ├── routes/
-│   │   ├── clothingRoutes.js  # API routes for clothing
-│   │   ├── outfitRoutes.js    # API routes for outfits
-│   │   ├── searchRoutes.js    # API routes for searching
-│   ├── firebase.js            # Firebase Admin SDK setup
-│   ├── index.js               # Main backend server
-│   ├── package.json           # Backend dependencies
+│   ├── routes/              # API routes for clothing, outfits, and search
+│   │   ├── clothingRoutes.js 
+│   │   ├── outfitRoutes.js   
+│   │   ├── searchRoutes.js   
+│   ├── firebase.js          # Firebase Admin SDK setup
+│   ├── index.js             # Express server configuration
+│   ├── package.json         # Backend dependencies
 │
 │── frontend/
 │   ├── src/
-│   │   ├── components/
-│   │   │   ├── Navbar.js       # Navigation bar
-│   │   ├── pages/
-│   │   │   ├── Home.js         # Home screen
-│   │   │   ├── Closet.js       # Closet management
-│   │   │   ├── AddClothing.js  # Add clothing page
-│   │   │   ├── OutfitHistory.js # Outfit tracking
-│   │   │   ├── Search.js       # Search function
-│   │   ├── firebase.js         # Firebase client setup
-│   ├── package.json            # Frontend dependencies
+│   │   ├── components/      # Reusable UI components (Navbar, Buttons, etc.)
+│   │   ├── pages/           # Application pages (Home, Closet, AddClothing, etc.)
+│   │   ├── firebase.js      # Firebase client-side configuration
+│   ├── package.json         # Frontend dependencies
+│   ├── styles.css           # Global styles
 │
-│── README.md                   # Project documentation
-│── .env                         # Environment variables
+│── README.md                # Project documentation
+│── .gitignore               # Git ignored files and folders
+│── .env                     # Environment variables (local setup)
 ```
 
-## 🏁 Getting Started
-### **1️⃣ Clone the Repository**
+## How to Run the Application Locally
+
+### Prerequisites
+Ensure you have the following installed:
+- **Node.js v18 or higher**
+- **NPM v8 or higher**
+- **Firebase CLI (optional, for deployment)**
+
+### 1. Clone the Repository
 ```bash
+cd YOUR_PROJECTS_FOLDER
+
 git clone https://github.com/yourusername/outfitly.git
 cd outfitly
 ```
-### **2️⃣ Backend Setup**
+
+### 2. Backend Setup
 ```bash
 cd backend
 npm install
 ```
-#### **Set Up Firebase Admin SDK**
+#### Set Up Firebase Admin SDK
 1. Go to Firebase Console → Project Settings → Service Accounts.
 2. Generate a private key and save it as `serviceAccountKey.json` in `/backend`.
-3. Add a `.env` file in `/backend` with:
+3. Create a `.env` file in `/backend` with:
    ```env
    PORT=5000
-   ````
+   ```
 4. Start the backend:
 ```bash
 npx nodemon index.js
 ```
 
-### **3️⃣ Frontend Setup**
+### 3. Frontend Setup
 ```bash
 cd frontend
 npm install
 npm start
 ```
 
-## 🚀 Deployment
-- **Frontend**: Can be deployed using **Vercel** or **Netlify**.
-- **Backend**: Deploy using **Firebase Cloud Functions** or **Render**.
+### 4. Open the App
+- Navigate to `http://localhost:3000` in your browser.
 
-## 🤝 Contributors
+## Available Features
+- Closet Management: Add, edit, and delete clothing items.
+- Outfit Logging: Track and save outfits.
+- Search & Filter: Find outfits based on category, color, or name.
+- Authentication: Sign up, log in, and log out using Firebase authentication.
+
+## Run Tests
+Run Jest (unit) tests:
+```bash
+npm test
+```
+Run ESLint (static code analysis):
+```bash
+npm run lint
+```
+
+## Deployment
+?
+
+## Contributors
 - **Zahra Alsadeg** (Lead Developer)
-- **Mentor:** [Your Instructor or TA]
+- **Mentor:** ?
 
-## 📜 License
-This project is **MIT licensed**.
 
----
-🚀 **Happy styling with Outfitly!** 👗👕
