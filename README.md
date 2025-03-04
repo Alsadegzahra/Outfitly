@@ -40,7 +40,7 @@ Ensure you have the following installed:
 ```bash
 cd YOUR_PROJECTS_FOLDER
 
-git clone https://github.com/yourusername/outfitly.git
+git clone https://github.com/Alsadegzahra/Outfitly
 cd outfitly
 ```
 
