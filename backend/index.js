@@ -40,6 +40,10 @@ app.use("/api/search", searchRoutes);
 const PORT = process.env.PORT || 5000;
 
 /**
- * Starts the Express server.
+ * Starts the Express server **only if not in test mode**.
  */
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+if (process.env.NODE_ENV !== "test") {
+  app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+}
+
+module.exports = app; 

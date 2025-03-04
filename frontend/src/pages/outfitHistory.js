@@ -66,8 +66,8 @@ const OutfitHistory = () => {
                                     outfit.items.map((item) => (
                                         <div key={item.id} className="outfit-item">
                                             <img 
-                                                src={item.image || "https://placehold.co/100"} 
-                                                alt={item.name} 
+                                                src={typeof item === "object" ? item.image : "https://placehold.co/100"} 
+                                                alt={typeof item === "object" ? item.name : "Unknown Item"} 
                                             />
                                             <p>{item.name}</p>
                                         </div>

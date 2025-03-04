@@ -5,10 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "../styles.css";
 
 /**
- * LogOutfit component allows users to log and save outfits by selecting clothing items.
- * 
- * @component
- * @returns {JSX.Element} - Rendered LogOutfit component.
+ * LogOutfit component allows users to log and save outfits.
  */
 const LogOutfit = () => {
     const [clothingItems, setClothingItems] = useState([]);
@@ -16,11 +13,11 @@ const LogOutfit = () => {
     const [outfitName, setOutfitName] = useState("");
     const [showPopup, setShowPopup] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [isSaving, setIsSaving] = useState(false);
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false); // ✅ Pop-up control
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.time("Firestore Fetch (LogOutfit)");
-        
         const unsubscribe = onSnapshot(collection(db, "clothing"), (querySnapshot) => {
             const clothingData = querySnapshot.docs.map(doc => ({
                 id: doc.id,
@@ -28,17 +25,11 @@ const LogOutfit = () => {
             }));
             setClothingItems(clothingData);
             setLoading(false);
-            console.timeEnd("Firestore Fetch (LogOutfit)");
         });
 
         return () => unsubscribe();
     }, []);
 
-    /**
-     * Toggles selection of a clothing item.
-     * 
-     * @param {Object} item - Clothing item object.
-     */
     const toggleSelection = (item) => {
         setSelectedItems((prev) => {
             const itemSet = new Set(prev.map(i => i.id));
@@ -48,28 +39,45 @@ const LogOutfit = () => {
         });
     };
 
-    /**
-     * Saves an outfit to Firestore with selected clothing items.
-     */
     const saveOutfit = async () => {
         if (selectedItems.length === 0 || !outfitName) {
             alert("❌ Please select items and name the outfit.");
             return;
         }
 
+        setIsSaving(true); // Start saving state
+
         const newOutfit = { 
             name: outfitName, 
-            items: selectedItems.map(item => item.id), 
+            items: selectedItems.map(item => ({
+                id: item.id,
+                name: item.name,
+                image: item.image || "https://placehold.co/100"
+            })), 
             createdAt: new Date().toISOString()
         };
 
         try {
             await addDoc(collection(db, "outfits"), newOutfit);
-            alert("✅ Outfit saved successfully!");
-            navigate("/outfit-history");
+
+            // ✅ Reset inputs and selections instantly
+            setOutfitName("");
+            setSelectedItems([]);
+
+            // ✅ Show success message
+            setShowSuccessMessage(true);
+            setIsSaving(false); // Stop showing "Saving..."
+
+            // ✅ Hide the pop-up after 1.5 seconds
+            setTimeout(() => {
+                setShowSuccessMessage(false);
+                navigate("/outfit-history"); // Navigate AFTER UI resets
+            }, 1500);
+
         } catch (error) {
             console.error("❌ Error saving outfit:", error);
             alert("Error saving outfit.");
+            setIsSaving(false);
         }
     };
 
@@ -91,7 +99,11 @@ const LogOutfit = () => {
                 {selectedItems.length > 0 ? (
                     selectedItems.map((item) => (
                         <div key={item.id} className="selected-item">
-                            <img src={item.image || "https://placehold.co/100"} alt={item.name} className="closet-image" />
+                            <img 
+                                src={item.image || "https://placehold.co/100"} 
+                                alt={item.name} 
+                                className="closet-image" 
+                            />
                             <p>{item.name}</p>
                         </div>
                     ))
@@ -100,7 +112,14 @@ const LogOutfit = () => {
                 )}
             </div>
 
-            <button onClick={saveOutfit} className="auth-button save-button">💾 Save Outfit</button>
+            <button 
+                onClick={saveOutfit} 
+                className="auth-button save-button" 
+                disabled={isSaving} 
+                style={{ opacity: isSaving ? 0.5 : 1 }}
+            >
+                {isSaving ? "💾 Saving..." : "💾 Save Outfit"}
+            </button>
 
             {showPopup && (
                 <div className="popup">
@@ -124,6 +143,13 @@ const LogOutfit = () => {
                         )}
                     </div>
                     <button onClick={() => setShowPopup(false)} className="auth-button close-button">✅ Done</button>
+                </div>
+            )}
+
+            {/* ✅ Success Message Popup */}
+            {showSuccessMessage && (
+                <div className="success-popup">
+                    <p>🎉 Outfit saved successfully!</p>
                 </div>
             )}
         </div>
