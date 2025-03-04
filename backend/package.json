@@ -1,27 +1,25 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
   "scripts": {
-    "test": "NODE_ENV=test jest",
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "engines": {
+    "node": "22"
+  },
+  "main": "index.js",
   "dependencies": {
     "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "firebase-admin": "^13.1.0",
-    "mongoose": "^8.10.1",
-    "multer": "^1.4.5-lts.1"
+    "firebase-admin": "^12.6.0",
+    "firebase-functions": "^6.0.1"
   },
   "devDependencies": {
-    "jest": "^29.7.0",
-    "nodemon": "^3.1.9",
-    "supertest": "^7.0.0"
-  }
+    "firebase-functions-test": "^3.1.0"
+  },
+  "private": true
 }

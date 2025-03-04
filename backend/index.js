@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const functions = require("firebase-functions");
 require("dotenv").config();
 
 const clothingRoutes = require("./routes/clothingRoutes");
@@ -34,16 +35,18 @@ app.use("/api/outfits", outfitRoutes);
 app.use("/api/search", searchRoutes);
 
 /**
- * Server listening port.
+ * Server listening port for local development.
  * @constant {number}
  */
 const PORT = process.env.PORT || 5000;
 
-/**
- * Starts the Express server **only if not in test mode**.
- */
 if (process.env.NODE_ENV !== "test") {
   app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
 }
 
-module.exports = app; 
+/**
+ * Exporting API for Firebase Functions deployment.
+ */
+exports.api = functions.https.onRequest(app);
+
+module.exports = app;

@@ -1,89 +1,103 @@
 # Outfitly
 
-Outfitly is a digital closet and outfit management web app that helps users organize their wardrobe, log outfits, and track their outfit history. The app uses **React** for the frontend, **Node.js** with **Express** for the backend, and **Firebase** for authentication, Firestore database, and cloud storage.
+Outfitly is a digital closet and outfit management web app that helps users organize their wardrobe, log outfits, and track their outfit history. The app uses **React** for the frontend, **Firebase Firestore** for the database, **Firebase Functions** for backend API, and **Firebase Authentication** for user login.
 
 ## Project Structure
+
 The project follows a modular structure for maintainability and scalability:
 
 ```
 /Outfitly
-│── backend/
-│   ├── routes/              # API routes for clothing, outfits, and search
-│   │   ├── clothingRoutes.js 
-│   │   ├── outfitRoutes.js   
-│   │   ├── searchRoutes.js   
-│   ├── firebase.js          # Firebase Admin SDK setup
-│   ├── index.js             # Express server configuration
-│   ├── package.json         # Backend dependencies
+│── backend/               # Backend (Firebase Functions & Express API)
+│   ├── index.js          # Main Express server & Firebase Functions
+│   ├── routes/           # API routes
+│   ├── firebase.js       # Firebase Admin SDK setup
+│   ├── package.json      # Backend dependencies
 │
-│── frontend/
+│── frontend/             # Frontend (React)
 │   ├── src/
-│   │   ├── components/      # Reusable UI components (Navbar, Buttons, etc.)
-│   │   ├── pages/           # Application pages (Home, Closet, AddClothing, etc.)
-│   │   ├── firebase.js      # Firebase client-side configuration
-│   ├── package.json         # Frontend dependencies
-│   ├── styles.css           # Global styles
+│   │   ├── components/   # UI components (Navbar, Closet, etc.)
+│   │   ├── pages/        # Application pages (Home, AddClothing, etc.)
+│   │   ├── firebase.js   # Firebase client-side config
+│   ├── public/           # Static files (index.html, manifest.json, etc.)
+│   ├── package.json      # Frontend dependencies
+│   ├── styles.css        # Global styles
 │
-│── README.md                # Project documentation
-│── .gitignore               # Git ignored files and folders
+│── .firebaserc           # Firebase project settings
+│── firebase.json         # Firebase hosting & function settings
+│── .gitignore            # Git ignored files and folders
+│── README.md             # Project documentation
 ```
 
 ## How to Run the Application Locally
 
 ### Prerequisites
+
 Ensure you have the following installed:
+
 - **Node.js v18 or higher**
 - **NPM v8 or higher**
-- **Firebase CLI (optional, for deployment)**
+- **Firebase CLI**
 
 ### 1. Clone the Repository
-```bash
-cd YOUR_PROJECTS_FOLDER
 
-git clone https://github.com/Alsadegzahra/Outfitly
+```sh
+git clone https://github.com/Alsadegzahra/Outfitly.git
 cd outfitly
 ```
 
-### 2. Backend Setup
-```bash
+### 2. Backend Setup (Firebase Functions & Express API)
+
+```sh
 cd backend
 npm install
-```
-#### Set Up Firebase Admin SDK
-1. Go to Firebase Console → Project Settings → Service Accounts.
-2. Generate a private key and save it as `serviceAccountKey.json` in `/backend`.
-3. Create a `.env` file in `/backend` with:
-   ```env
-   PORT=5000
-   ```
-4. Start the backend:
-```bash
-npx nodemon index.js
+firebase emulators:start
 ```
 
 ### 3. Frontend Setup
-```bash
+
+```sh
 cd frontend
 npm install
 npm start
 ```
 
 ### 4. Open the App
+
 - Navigate to `http://localhost:3000` in your browser.
 
 ## Available Features
-- Closet Management: Add, edit, and delete clothing items.
-- Outfit Logging: Track and save outfits.
-- Search & Filter: Find outfits based on category, color, or name.
-- Authentication: Sign up, log in, and log out using Firebase authentication.
 
-## Run Tests
-?
+- **Closet Management**: Add, edit, and delete clothing items.
+- **Outfit Logging**: Track and save outfits.
+- **Search & Filter**: Find outfits based on category, color, or name.
+- **Authentication**: Sign up, log in, and log out using Firebase authentication.
 
 ## Deployment
-?
+
+### 1. Deploy Frontend to Firebase Hosting
+
+```sh
+cd frontend
+npm run build
+firebase deploy
+```
+
+### 2. Deploy Backend (Firebase Functions)
+
+```sh
+cd backend
+firebase deploy --only functions
+```
+
+### 3. Confirm Deployment
+
+- **Frontend is live at:** [https://outfitly-dbd69.web.app](https://outfitly-dbd69.web.app)
+- **Backend API is available at:** [https://us-central1-outfitly-dbd69.cloudfunctions.net/api](https://us-central1-outfitly-dbd69.cloudfunctions.net/api)
 
 ## Contributors
-- **Zahra Alsadeg** (Lead Developer)
-- **Mentor:** ?
 
+- **Zahra Alsadeg** (Lead Developer)
+- **Mentor:** *[Add mentor’s name if applicable]*
+
+---

@@ -27,8 +27,8 @@ const Navbar = () => {
         <button onClick={() => navigate("/log-outfit")} className="nav-button">Log Outfit</button>
         <button onClick={() => navigate("/outfit-history")} className="nav-button">Outfit History</button>
         <button onClick={() => navigate("/search")} className="nav-button">Search</button>
-        <button onClick={() => navigate("/login")} className="nav-button">Log In</button>
         <button onClick={() => navigate("/signup")} className="nav-button">Sign Up</button>
+        <button onClick={() => navigate("/login")} className="nav-button">Log In</button>
         <button onClick={() => navigate("/logout")} className="nav-button">Log Out</button>
       </div>
     </nav>
