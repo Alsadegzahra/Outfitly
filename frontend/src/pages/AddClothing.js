@@ -6,10 +6,8 @@ import { v4 as uuidv4 } from "uuid";
 import "../styles.css";
 
 /**
- * AddClothing component allows users to add clothing items to the closet.
- * 
- * @component
- * @returns {JSX.Element} - Rendered AddClothing component.
+ * Component for adding clothing items to the closet.
+ * @returns {JSX.Element} The rendered AddClothing component.
  */
 const AddClothing = () => {
     const [clothingName, setClothingName] = useState("");
@@ -25,9 +23,8 @@ const AddClothing = () => {
     const colors = ["Red", "Blue", "Green", "Black", "White", "Yellow", "Purple", "Pink", "Orange", "Gray", "Brown", "Beige"];
 
     /**
-     * Handles image file selection and updates preview.
-     * 
-     * @param {Object} e - Event object.
+     * Handles image file selection and updates the preview.
+     * @param {Event} e - The event object.
      */
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -40,9 +37,8 @@ const AddClothing = () => {
     };
 
     /**
-     * Uploads the selected image to Firebase Storage and returns the download URL.
-     * 
-     * @returns {Promise<string|null>} - URL of uploaded image or null if no image is uploaded.
+     * Uploads the selected image to Firebase Storage.
+     * @returns {Promise<string|null>} The download URL of the uploaded image, or null if no image is uploaded.
      */
     const uploadImageToFirebase = async () => {
         if (!imageFile) return null;
@@ -56,7 +52,7 @@ const AddClothing = () => {
                 "state_changed",
                 null,
                 (error) => {
-                    console.error("❌ Upload failed", error);
+                    console.error("Upload failed", error);
                     setUploading(false);
                     reject(error);
                 },
@@ -70,11 +66,11 @@ const AddClothing = () => {
     };
 
     /**
-     * Adds a new clothing item to Firestore with image upload support.
+     * Adds a new clothing item to Firestore, including optional image upload.
      */
     const addClothing = async () => {
         if (!clothingName || !clothingCategory || !clothingColor) {
-            setErrorMessage("❌ Please fill in all required fields.");
+            setErrorMessage("Please fill in all required fields.");
             return;
         }
         setErrorMessage("");
@@ -92,7 +88,7 @@ const AddClothing = () => {
 
             await addDoc(collection(db, "clothing"), newClothingItem);
 
-            setSuccessMessage("✅ Clothing added successfully!");
+            setSuccessMessage("Clothing added successfully!");
             setTimeout(() => setSuccessMessage(""), 3000);
 
             setClothingName("");
@@ -104,14 +100,14 @@ const AddClothing = () => {
             document.getElementById("category-select").selectedIndex = 0;
             document.getElementById("color-select").selectedIndex = 0;
         } catch (error) {
-            console.error("❌ Firestore Write Error:", error);
-            setErrorMessage(`❌ Error: ${error.message}`);
+            console.error("Firestore Write Error:", error);
+            setErrorMessage(`Error: ${error.message}`);
         }
     };
 
     return (
         <div className="auth-container">
-            <h2>➕ Add Clothing</h2>
+            <h2>Add Clothing</h2>
             {errorMessage && <p className="error-message">{errorMessage}</p>}
             {successMessage && <p className="success-message">{successMessage}</p>}
             <input
@@ -144,7 +140,7 @@ const AddClothing = () => {
                 </div>
             )}
             <button onClick={addClothing} className="primary-button" disabled={uploading}>
-                {uploading ? "Uploading..." : "➕ Add Clothing"}
+                {uploading ? "Uploading..." : "Add Clothing"}
             </button>
         </div>
     );

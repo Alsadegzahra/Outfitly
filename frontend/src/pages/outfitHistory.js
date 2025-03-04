@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../firebase";
-import { 
-    collection, 
-    onSnapshot, 
-    doc, 
-    deleteDoc 
-} from "firebase/firestore";
+import { collection, onSnapshot, doc, deleteDoc } from "firebase/firestore";
 import "../styles.css";
 
 /**
  * OutfitHistory component displays the user's logged outfits and allows deletion of outfits.
- * 
- * @component
- * @returns {JSX.Element} - Rendered OutfitHistory component.
+ * @returns {JSX.Element} The rendered OutfitHistory component.
  */
 const OutfitHistory = () => {
     const [outfits, setOutfits] = useState([]);
@@ -32,7 +25,6 @@ const OutfitHistory = () => {
 
     /**
      * Deletes an outfit from Firestore.
-     * 
      * @param {string} outfitId - ID of the outfit to delete.
      */
     const deleteOutfit = async (outfitId) => {
@@ -40,15 +32,15 @@ const OutfitHistory = () => {
 
         try {
             await deleteDoc(doc(db, "outfits", outfitId));
-            alert("🗑️ Outfit deleted successfully!");
+            alert("Outfit deleted successfully!");
         } catch (error) {
-            console.error("❌ Error deleting outfit:", error);
+            console.error("Error deleting outfit:", error);
         }
     };
 
     return (
         <div className="auth-container">
-            <h2>📜 Outfit History</h2>
+            <h2>Outfit History</h2>
 
             {outfits.length > 0 ? (
                 <div className="outfit-container">
@@ -59,7 +51,7 @@ const OutfitHistory = () => {
                                 onClick={() => deleteOutfit(outfit.id)} 
                                 className="auth-button"
                             >
-                                🗑️ Delete Outfit
+                                Delete Outfit
                             </button>
                             <div className="outfit-items">
                                 {outfit.items && outfit.items.length > 0 ? (
@@ -73,14 +65,14 @@ const OutfitHistory = () => {
                                         </div>
                                     ))
                                 ) : (
-                                    <p>⚠️ No items in this outfit.</p>
+                                    <p>No items in this outfit.</p>
                                 )}
                             </div>
                         </div>
                     ))}
                 </div>
             ) : (
-                <p className="no-outfits">⚠️ No outfits found.</p>
+                <p className="no-outfits">No outfits found.</p>
             )}
         </div>
     );

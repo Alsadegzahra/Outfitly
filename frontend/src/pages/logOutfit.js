@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import "../styles.css";
 
 /**
- * LogOutfit component allows users to log and save outfits.
+ * LogOutfit component that allows users to log and save outfits.
+ * @returns {JSX.Element} The rendered LogOutfit component.
  */
 const LogOutfit = () => {
     const [clothingItems, setClothingItems] = useState([]);
@@ -14,7 +15,7 @@ const LogOutfit = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [loading, setLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
-    const [showSuccessMessage, setShowSuccessMessage] = useState(false); // ✅ Pop-up control
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -30,6 +31,10 @@ const LogOutfit = () => {
         return () => unsubscribe();
     }, []);
 
+    /**
+     * Toggles selection of a clothing item.
+     * @param {Object} item - The clothing item object.
+     */
     const toggleSelection = (item) => {
         setSelectedItems((prev) => {
             const itemSet = new Set(prev.map(i => i.id));
@@ -39,13 +44,16 @@ const LogOutfit = () => {
         });
     };
 
+    /**
+     * Saves the selected outfit to Firestore.
+     */
     const saveOutfit = async () => {
         if (selectedItems.length === 0 || !outfitName) {
-            alert("❌ Please select items and name the outfit.");
+            alert("Please select items and name the outfit.");
             return;
         }
 
-        setIsSaving(true); // Start saving state
+        setIsSaving(true);
 
         const newOutfit = { 
             name: outfitName, 
@@ -60,22 +68,18 @@ const LogOutfit = () => {
         try {
             await addDoc(collection(db, "outfits"), newOutfit);
 
-            // ✅ Reset inputs and selections instantly
             setOutfitName("");
             setSelectedItems([]);
 
-            // ✅ Show success message
             setShowSuccessMessage(true);
-            setIsSaving(false); // Stop showing "Saving..."
+            setIsSaving(false);
 
-            // ✅ Hide the pop-up after 1.5 seconds
             setTimeout(() => {
                 setShowSuccessMessage(false);
-                navigate("/outfit-history"); // Navigate AFTER UI resets
+                navigate("/outfit-history");
             }, 1500);
-
         } catch (error) {
-            console.error("❌ Error saving outfit:", error);
+            console.error("Error saving outfit:", error);
             alert("Error saving outfit.");
             setIsSaving(false);
         }
@@ -93,7 +97,7 @@ const LogOutfit = () => {
                 className="auth-input"
             />
 
-            <button onClick={() => setShowPopup(true)} className="auth-button">🛍️ Select Items</button>
+            <button onClick={() => setShowPopup(true)} className="auth-button">Select Items</button>
 
             <div className="selected-container">
                 {selectedItems.length > 0 ? (
@@ -118,7 +122,7 @@ const LogOutfit = () => {
                 disabled={isSaving} 
                 style={{ opacity: isSaving ? 0.5 : 1 }}
             >
-                {isSaving ? "💾 Saving..." : "💾 Save Outfit"}
+                {isSaving ? "Saving..." : "Save Outfit"}
             </button>
 
             {showPopup && (
@@ -126,7 +130,7 @@ const LogOutfit = () => {
                     <h3>Select Clothing Items</h3>
                     <div className="popup-content">
                         {loading ? (
-                            <p>⏳ Loading items...</p>
+                            <p>Loading items...</p>
                         ) : clothingItems.length > 0 ? (
                             clothingItems.map((item) => (
                                 <div
@@ -139,17 +143,16 @@ const LogOutfit = () => {
                                 </div>
                             ))
                         ) : (
-                            <p>🛑 No clothing items available. Add clothes first!</p>
+                            <p>No clothing items available. Add clothes first!</p>
                         )}
                     </div>
-                    <button onClick={() => setShowPopup(false)} className="auth-button close-button">✅ Done</button>
+                    <button onClick={() => setShowPopup(false)} className="auth-button close-button">Done</button>
                 </div>
             )}
 
-            {/* ✅ Success Message Popup */}
             {showSuccessMessage && (
                 <div className="success-popup">
-                    <p>🎉 Outfit saved successfully!</p>
+                    <p>Outfit saved successfully!</p>
                 </div>
             )}
         </div>

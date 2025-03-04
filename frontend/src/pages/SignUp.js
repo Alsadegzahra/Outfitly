@@ -2,13 +2,11 @@ import React, { useState } from "react";
 import { auth } from "../firebase";
 import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import "../styles.css"; 
+import "../styles.css";
 
 /**
  * SignUp component allows users to create an account using email/password or Google authentication.
- * 
- * @component
- * @returns {JSX.Element} - Rendered SignUp component.
+ * @returns {JSX.Element} The rendered SignUp component.
  */
 const SignUp = () => {
     const [email, setEmail] = useState("");
@@ -20,8 +18,7 @@ const SignUp = () => {
 
     /**
      * Handles user sign-up with email and password.
-     * 
-     * @param {Object} e - Event object.
+     * @param {Event} e - The event object.
      */
     const handleSignUp = async (e) => {
         e.preventDefault();
@@ -30,10 +27,10 @@ const SignUp = () => {
 
         try {
             await createUserWithEmailAndPassword(auth, email, password);
-            alert("✅ Sign-Up Successful! Redirecting...");
+            alert("Sign-Up Successful! Redirecting...");
             navigate("/closet");
         } catch (error) {
-            setErrorMessage(`❌ ${error.message}`);
+            setErrorMessage(`Error: ${error.message}`);
         }
         setLoading(false);
     };
@@ -44,16 +41,16 @@ const SignUp = () => {
     const handleGoogleSignIn = async () => {
         try {
             await signInWithPopup(auth, provider);
-            alert("✅ Google Sign-In Successful! Redirecting...");
+            alert("Google Sign-In Successful! Redirecting...");
             navigate("/closet");
         } catch (error) {
-            setErrorMessage(`❌ ${error.message}`);
+            setErrorMessage(`Error: ${error.message}`);
         }
     };
 
     return (
         <div className="auth-container">
-            <h2>🔐 Sign Up</h2>
+            <h2>Sign Up</h2>
 
             {errorMessage && <p className="error-message">{errorMessage}</p>}
 
@@ -74,13 +71,13 @@ const SignUp = () => {
                 required
             />
             <button onClick={handleSignUp} className="auth-button" disabled={loading}>
-                {loading ? "Signing Up..." : "🔐 Sign Up"}
+                {loading ? "Signing Up..." : "Sign Up"}
             </button>
 
             <hr className="divider" /> 
             
             <button onClick={handleGoogleSignIn} className="google-button">
-                🟢 Sign Up with Google
+                Sign Up with Google
             </button>
         </div>
     );

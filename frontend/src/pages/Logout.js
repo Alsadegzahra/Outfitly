@@ -2,13 +2,11 @@ import React, { useState } from "react";
 import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import "../styles.css"; 
+import "../styles.css";
 
 /**
  * Logout component that allows users to sign out and redirects them to the login page.
- * 
- * @component
- * @returns {JSX.Element} - Rendered Logout component.
+ * @returns {JSX.Element} The rendered Logout component.
  */
 const Logout = () => {
     const navigate = useNavigate();
@@ -19,9 +17,9 @@ const Logout = () => {
      */
     const handleLogout = async () => {
         await signOut(auth);
-        setLogoutMessage("✅ Logged out successfully! Redirecting..."); 
+        setLogoutMessage("Logged out successfully! Redirecting...");
         setTimeout(() => {
-            setLogoutMessage(""); 
+            setLogoutMessage("");
             navigate("/login");
         }, 3000);
     };
@@ -30,7 +28,7 @@ const Logout = () => {
         <div className="logout-container">
             {logoutMessage && <p className="success-message">{logoutMessage}</p>}
             <button onClick={handleLogout} className="auth-button logout-button">
-                🚪 Logout
+                Logout
             </button>
         </div>
     );

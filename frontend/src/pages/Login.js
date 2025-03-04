@@ -6,9 +6,7 @@ import "../styles.css";
 
 /**
  * Login component that allows users to sign in using email/password or Google authentication.
- * 
- * @component
- * @returns {JSX.Element} - Rendered Login component.
+ * @returns {JSX.Element} The rendered Login component.
  */
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -20,8 +18,7 @@ const Login = () => {
 
     /**
      * Handles login with email and password.
-     * 
-     * @param {Object} e - Event object.
+     * @param {Event} e - The event object.
      */
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -30,10 +27,10 @@ const Login = () => {
 
         try {
             await signInWithEmailAndPassword(auth, email, password);
-            alert("✅ Login Successful! Redirecting...");
+            alert("Login Successful! Redirecting...");
             navigate("/closet");
         } catch (error) {
-            setErrorMessage(`❌ ${error.message}`);
+            setErrorMessage(`Error: ${error.message}`);
         }
         setLoading(false);
     };
@@ -44,16 +41,16 @@ const Login = () => {
     const handleGoogleSignIn = async () => {
         try {
             await signInWithPopup(auth, provider);
-            alert("✅ Google Sign-In Successful! Redirecting...");
+            alert("Google Sign-In Successful! Redirecting...");
             navigate("/closet");
         } catch (error) {
-            setErrorMessage(`❌ ${error.message}`);
+            setErrorMessage(`Error: ${error.message}`);
         }
     };
 
     return (
         <div className="auth-container">
-            <h2>🔑 Login</h2>
+            <h2>Login</h2>
 
             {errorMessage && <p className="error-message">{errorMessage}</p>}
 
@@ -74,13 +71,13 @@ const Login = () => {
                 required
             />
             <button onClick={handleLogin} className="auth-button" disabled={loading}>
-                {loading ? "Logging In..." : "🔑 Login"}
+                {loading ? "Logging In..." : "Login"}
             </button>
 
             <hr className="divider" />
             
             <button onClick={handleGoogleSignIn} className="google-button">
-                🟢 Login with Google
+                Login with Google
             </button>
         </div>
     );

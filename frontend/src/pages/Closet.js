@@ -1,23 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../firebase"; 
-import { 
-    collection, 
-    onSnapshot, 
-    doc, 
-    updateDoc, 
-    deleteDoc, 
-    getDocs, 
-    query, 
-    where 
-} from "firebase/firestore";
+import { collection, onSnapshot, doc, updateDoc, deleteDoc } from "firebase/firestore";
 import "../styles.css";
 
+const categories = ["Top", "Bottom", "Shoes", "Outerwear", "Accessories", "Dress", "Activewear", "Sleepwear"];
+const colors = ["Red", "Blue", "Green", "Black", "White", "Yellow", "Purple", "Pink", "Orange", "Gray", "Brown", "Beige"];
+
 /**
- * Closet component that displays the user's clothing collection.
- * Allows users to edit or delete clothing items.
- * 
- * @component
- * @returns {JSX.Element} - Rendered Closet component.
+ * Component that displays and manages the user's clothing collection.
+ * Users can edit or delete clothing items.
+ * @returns {JSX.Element} The rendered Closet component.
  */
 const Closet = () => {
     const [clothing, setClothing] = useState([]);
@@ -37,12 +29,27 @@ const Closet = () => {
     }, []);
 
     /**
-     * Edits an existing clothing item in Firestore.
-     * 
-     * @param {string} itemId - ID of the clothing item to edit.
+     * Toggles the edit form for a selected clothing item.
+     * @param {Object} item - The clothing item to edit.
+     */
+    const toggleEditForm = (item) => {
+        if (editItem?.id === item.id) {
+            setEditItem(null);
+            setNewCategory("");
+            setNewColor("");
+        } else {
+            setEditItem(item);
+            setNewCategory(item.category || "");
+            setNewColor(item.color || "");
+        }
+    };
+
+    /**
+     * Updates a clothing item in Firestore with the new category or color.
+     * @param {string} itemId - The ID of the clothing item to update.
      */
     const editClothingItem = async (itemId) => {
-        if (!newCategory && !newColor) return alert("Please enter a new category or color.");
+        if (!newCategory && !newColor) return alert("Please select a category or color.");
 
         try {
             const itemRef = doc(db, "clothing", itemId);
@@ -52,55 +59,33 @@ const Closet = () => {
 
             await updateDoc(itemRef, updates);
 
-            const outfitQuery = query(collection(db, "outfits"), where("items", "array-contains", itemId));
-            const outfitSnapshot = await getDocs(outfitQuery);
-
-            outfitSnapshot.forEach(async (outfitDoc) => {
-                const outfitRef = doc(db, "outfits", outfitDoc.id);
-                const updatedItems = outfitDoc.data().items.map(item =>
-                    item === itemId ? { ...item, ...updates } : item
-                );
-
-                await updateDoc(outfitRef, { items: updatedItems });
-            });
-
-            alert("✅ Clothing updated successfully!");
+            alert("Clothing updated successfully!");
             setEditItem(null);
             setNewCategory("");
             setNewColor("");
         } catch (error) {
-            console.error("❌ Error updating clothing:", error);
+            console.error("Error updating clothing:", error);
         }
     };
 
     /**
-     * Deletes a clothing item and any outfits containing it.
-     * 
-     * @param {string} itemId - ID of the clothing item to delete.
+     * Deletes a clothing item from Firestore.
+     * @param {string} itemId - The ID of the clothing item to delete.
      */
     const deleteClothingItem = async (itemId) => {
-        if (!window.confirm("Are you sure you want to delete this item? This will also delete any outfits that used it!")) return;
+        if (!window.confirm("Are you sure you want to delete this item?")) return;
 
         try {
             await deleteDoc(doc(db, "clothing", itemId));
-
-            const outfitQuery = query(collection(db, "outfits"), where("items", "array-contains", itemId));
-            const outfitSnapshot = await getDocs(outfitQuery);
-
-            outfitSnapshot.forEach(async (outfitDoc) => {
-                const outfitRef = doc(db, "outfits", outfitDoc.id);
-                await deleteDoc(outfitRef);
-            });
-
-            alert("🗑️ Item and all outfits that used it have been deleted!");
+            alert("Item deleted successfully!");
         } catch (error) {
-            console.error("❌ Error deleting clothing and outfits:", error);
+            console.error("Error deleting clothing:", error);
         }
     };
 
     return (
         <div className="closet-container">
-            <h2>👗 My Closet</h2>
+            <h2>My Closet</h2>
             <div className="card-container">
                 {clothing.length > 0 ? (
                     clothing.map((item) => (
@@ -113,34 +98,36 @@ const Closet = () => {
                             <p><strong>{item.name}</strong></p>
                             <p>{item.category} - {item.color}</p>
 
-                            {/* ✏️ Edit Button */}
-                            <button onClick={() => setEditItem(item)} className="edit-button">✏️ Edit</button>
+                            <button onClick={() => toggleEditForm(item)} className="edit-button">
+                                {editItem?.id === item.id ? "Cancel" : "Edit"}
+                            </button>
+                            <button onClick={() => deleteClothingItem(item.id)} className="delete-button">Delete</button>
 
-                            {/* ❌ Delete Button */}
-                            <button onClick={() => deleteClothingItem(item.id)} className="delete-button">🗑️ Delete</button>
-
-                            {/* Edit Form */}
                             {editItem?.id === item.id && (
                                 <div className="edit-form">
-                                    <input
-                                        type="text"
-                                        placeholder="New Category"
-                                        value={newCategory}
-                                        onChange={(e) => setNewCategory(e.target.value)}
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder="New Color"
-                                        value={newColor}
-                                        onChange={(e) => setNewColor(e.target.value)}
-                                    />
-                                    <button onClick={() => editClothingItem(item.id)} className="primary-button">✅ Save</button>
+                                    <label>Category</label>
+                                    <select value={newCategory} onChange={(e) => setNewCategory(e.target.value)}>
+                                        <option value="">Select Category</option>
+                                        {categories.map((category) => (
+                                            <option key={category} value={category}>{category}</option>
+                                        ))}
+                                    </select>
+
+                                    <label>Color</label>
+                                    <select value={newColor} onChange={(e) => setNewColor(e.target.value)}>
+                                        <option value="">Select Color</option>
+                                        {colors.map((color) => (
+                                            <option key={color} value={color}>{color}</option>
+                                        ))}
+                                    </select>
+
+                                    <button onClick={() => editClothingItem(item.id)} className="save-button">Save</button>
                                 </div>
                             )}
                         </div>
                     ))
                 ) : (
-                    <p className="no-items">⚠️ No clothing items found.</p>
+                    <p className="no-items">No clothing items found.</p>
                 )}
             </div>
         </div>

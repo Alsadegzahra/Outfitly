@@ -3,6 +3,10 @@ import { db } from "../firebase";
 import { collection, onSnapshot, query, orderBy, limit } from "firebase/firestore";
 import "../styles.css";
 
+/**
+ * Home component displaying statistics and recent activity related to outfits and clothing.
+ * @returns {JSX.Element} The rendered Home component.
+ */
 const Home = () => {
     const [mostRecentOutfit, setMostRecentOutfit] = useState(null);
     const [mostWornItem, setMostWornItem] = useState(null);
@@ -10,15 +14,11 @@ const Home = () => {
     const [recentClothing, setRecentClothing] = useState(null);
 
     useEffect(() => {
-        // Fetch Outfits
         const unsubscribeOutfits = onSnapshot(collection(db, "outfits"), (snapshot) => {
             const fetchedOutfits = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
-            // Get Most Recent Outfit
             const sortedOutfits = fetchedOutfits.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
             setMostRecentOutfit(sortedOutfits.length > 0 ? sortedOutfits[0] : null);
 
-            // Count Item Occurrences
             const itemCount = {};
             fetchedOutfits.forEach(outfit => {
                 outfit.items.forEach(item => {
@@ -30,7 +30,6 @@ const Home = () => {
                 });
             });
 
-            // Find Most & Least Worn Items
             const itemsArray = Object.values(itemCount).filter(item => item.count > 0);
             if (itemsArray.length > 0) {
                 setMostWornItem(itemsArray.reduce((max, item) => (item.count > max.count ? item : max), itemsArray[0]));
@@ -41,7 +40,6 @@ const Home = () => {
             }
         });
 
-        // Fetch Recently Added Clothing
         const unsubscribeClothing = onSnapshot(
             query(collection(db, "clothing"), orderBy("createdAt", "desc"), limit(1)),
             (snapshot) => {
@@ -58,13 +56,12 @@ const Home = () => {
 
     return (
         <div className="home-container">
-            <h1 className="welcome-message">👗 Welcome to Outfitly! 👕</h1>
+            <h1 className="welcome-message">Welcome to Outfitly</h1>
 
             <div className="home-grid">
-                {/* ✅ Left Column (Correct Order) */}
                 <div className="left-column">
                     <div className="box">
-                        <h3>👕 Most Recent Outfit</h3>
+                        <h3>Most Recent Outfit</h3>
                         {mostRecentOutfit ? (
                             <>
                                 <p><strong>{mostRecentOutfit.name}</strong></p>
@@ -83,7 +80,7 @@ const Home = () => {
                     </div>
 
                     <div className="box">
-                        <h3>🆕 Recently Added Clothing</h3>
+                        <h3>Recently Added Clothing</h3>
                         {recentClothing ? (
                             <>
                                 <img className="item-img" src={recentClothing.image || "https://placehold.co/100"} alt={recentClothing.name} />
@@ -96,10 +93,9 @@ const Home = () => {
                     </div>
                 </div>
 
-                {/* ✅ Right Column (Correct Order) */}
                 <div className="right-column">
                     <div className="box">
-                        <h3>🔥 Most Worn Item</h3>
+                        <h3>Most Worn Item</h3>
                         {mostWornItem ? (
                             <>
                                 <img className="item-img" src={mostWornItem.image || "https://placehold.co/100"} alt={mostWornItem.name} />
@@ -112,7 +108,7 @@ const Home = () => {
                     </div>
 
                     <div className="box">
-                        <h3>❄️ Least Worn Item</h3>
+                        <h3>Least Worn Item</h3>
                         {leastWornItem ? (
                             <>
                                 <img className="item-img" src={leastWornItem.image || "https://placehold.co/100"} alt={leastWornItem.name} />

@@ -1,8 +1,9 @@
 /* ✅ Global Styles for Outfitly */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
 
 html, body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter', sans-serif;
   background: white;
   color: #333;
   margin: 0;
@@ -16,63 +17,72 @@ html, body {
   align-items: center;
   justify-content: flex-start;
 }
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif; /* 🔥 Adds a touch of elegance */
+    font-weight: 600;
+}
 
+/* ================================== */
+/* ✅ Navbar Styling */
+/* ================================== */
 /* ✅ Navbar Styling */
 .navbar-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 100%;
-  padding: 20px 0;
-  background: white;
-  position: relative;
-  top: 0;
-  left: 0;
-  transform: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 20px 0;
+    background: white;
 }
 
+/* ✅ Centered Logo */
 .logo {
-  height: 120px;
-  cursor: pointer;
-  margin-bottom: 20px;
-  display: block;
-  align-self: center;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
+    height: 120px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    display: block;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
+/* ✅ Change Font for Navbar Links */
 .navbar-links {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-  flex-wrap: wrap;
-  width: 100%;
-  max-width: 90vw;
-  overflow-x: hidden;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-family: 'Poppins', sans-serif; /* 🔥 Change this to your preferred font */
+    font-weight: 500;
+    font-size: 16px;
 }
 
+/* ✅ Navbar Button Styling */
 .nav-button {
-  text-decoration: none;
-  font-weight: 500;
-  color: #333;
-  background: #F8AFA6;
-  padding: 12px 18px;
-  border-radius: 8px;
-  transition: background 0.3s ease-in-out, transform 0.2s;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
+    text-decoration: none;
+    font-weight: 500;
+    color: #333;
+    background: #F8AFA6;
+    padding: 12px 18px;
+    border-radius: 8px;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif; /* 🔥 Change font for buttons too */
 }
 
 .nav-button:hover {
-  background: #f4978e;
-  transform: scale(1.05);
+    background: #f4978e;
+    transform: scale(1.05);
 }
 
-/* ✅ Forms & Input Styling (Login, Sign Up, Add Clothing) */
+
+/* ================================== */
+/* ✅ Forms & Inputs (Login, Sign Up, Add Clothing) */
+/* ================================== */
+
 .auth-container {
     max-width: 400px;
     margin: 50px auto;
@@ -81,12 +91,6 @@ html, body {
     border-radius: 8px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
-}
-
-.auth-container h2 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #333;
 }
 
 .auth-container input, .auth-container select {
@@ -105,130 +109,499 @@ html, body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 10px;
 }
 
 .auth-container button:hover {
     background: #E48D88;
 }
 
-/* ✅ Shared Card Styling (Closet, Search, Outfit History) */
-.card-item {
-    background: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+/* ================================== */
+/* ✅ Closet Page Styles (Now Matches Other Pages) */
+/* ================================== */
+
+.closet-container {
     text-align: center;
-    width: 220px;
-    margin: 10px;
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
-.card-item h3 {
-    margin-top: 10px;
-    font-size: 18px;
+/* ✅ Grid Layout for Clothing Items */
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* 🔥 Responsive grid */
+    gap: 20px;
+    justify-content: center;
 }
 
-.card-item p {
-    font-size: 14px;
-    color: #555;
+/* ✅ Individual Clothing Item */
+.card-item {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* 🔥 Softer shadow */
+    text-align: center;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
 }
 
-.closet-image, .search-image {
+.card-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ✅ Clothing Image */
+.closet-image {
     width: 100%;
-    border-radius: 5px;
+    max-width: 160px; /* 🔥 Uniform image size */
+    height: 160px;
+    border-radius: 8px;
+    object-fit: cover;
 }
 
-/* ✅ Delete Button */
-.delete-button {
-    background: #E74C3C;
-    color: white;
-    padding: 8px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+/* ================================== */
+/* ✅ Improved Buttons */
+/* ================================== */
+
+.edit-button, .delete-button {
+    width: 100%;
+    padding: 10px;
     margin-top: 5px;
-    width: 100%;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+/* ✅ Edit Button (Consistent Blue) */
+.edit-button {
+    background: #007BFF;
+    color: white;
+}
+
+.edit-button:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+/* ✅ Delete Button (Soft Red) */
+.delete-button {
+    background: #FF5C5C;
+    color: white;
 }
 
 .delete-button:hover {
-    background: #C0392B;
+    background: #D94343;
+    transform: scale(1.05);
 }
 
-/* ✅ Search Bar Styling */
-.auth-input {
+/* ✅ Edit Form */
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* ✅ Dropdown Styling */
+.edit-form select {
     width: 100%;
     padding: 10px;
-    margin-top: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    background: white;
 }
 
-/* ✅ Outfit History */
-.outfit-card {
-    background: #fff;
+/* ================================== */
+/* ✅ No Items Found Message (Now Matches Other Pages) */
+/* ================================== */
+
+.no-items {
+    font-size: 16px;
+    color: #888;
+    margin-top: 20px;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+
+/* ================================== */
+/* ✅ Improved Buttons */
+/* ================================== */
+
+.edit-button, .delete-button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+/* ✅ Edit Button (Smooth Blue) */
+.edit-button {
+    background: #007BFF;
+    color: white;
+}
+
+.edit-button:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+/* ✅ Delete Button (More Balanced Red) */
+.delete-button {
+    background: #FF5C5C;
+    color: white;
+}
+
+.delete-button:hover {
+    background: #D94343;
+    transform: scale(1.05);
+}
+
+/* ✅ Edit Form (Dropdown Selection) */
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.edit-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    background: white;
+}
+
+/* ✅ Save & Cancel Buttons */
+.save-button, .cancel-button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+/* ✅ Save Button */
+.save-button {
+    background: #007BFF;
+    color: white;
+}
+
+.save-button:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+/* ✅ Cancel Button */
+.cancel-button {
+    background: #FF5C5C;
+    color: white;
+}
+
+.cancel-button:hover {
+    background: #D94343;
+    transform: scale(1.05);
+}
+
+/* ================================== */
+/* ✅ Closet Page Styles (Now Matches Outfit History) */
+/* ================================== */
+
+.closet-container {
+    text-align: center;
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* ✅ Grid Layout for Clothing Items (Matches Outfit History) */
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 🔥 Now exactly like Outfit History */
+    gap: 15px;
+    justify-content: center;
+}
+
+/* ✅ Individual Clothing Item (Styled Like Outfit Cards) */
+.card-item {
+    background: white;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 300px;
-    margin: 15px auto;
+    transition: transform 0.2s ease-in-out;
 }
 
+.card-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ✅ Clothing Image (Consistent with Outfit Images) */
+.closet-image {
+    width: 100%;
+    max-width: 150px;
+    height: 150px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* ================================== */
+/* ✅ Buttons (Styled Like Outfit History) */
+/* ================================== */
+
+.edit-button, .delete-button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+/* ✅ Edit Button (Consistent Blue) */
+.edit-button {
+    background: #007BFF;
+    color: white;
+}
+
+.edit-button:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+/* ✅ Delete Button (Soft Red) */
+.delete-button {
+    background: #FF5C5C;
+    color: white;
+}
+
+.delete-button:hover {
+    background: #D94343;
+    transform: scale(1.05);
+}
+
+/* ================================== */
+/* ✅ No Items Found Message (Matches Outfit History) */
+/* ================================== */
+
+.no-items {
+    font-size: 16px;
+    color: #888;
+    margin-top: 20px;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* ================================== */
+/* ✅ Home Page Styles */
+/* ================================== */
+
+.home-container {
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.home-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    width: 90%;
+    max-width: 1200px;
+    justify-content: space-between;
+}
+
+.left-column {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+    align-items: flex-start;
+    margin-left: -50px;
+}
+
+.right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+    align-items: flex-end;
+    margin-right: -50px;
+}
+
+.box {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    width: 100%;
+    max-width: 450px;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.outfit-item img, .item-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* ================================== */
+/* ✅ Search Page Styles */
+/* ================================== */
+/* ✅ Search Bar */
+
+/* ✅ Standardized Input Styling */
+.auth-input, 
+.search-bar, 
+.filters select {
+    width: 100%;
+    max-width: 350px; /* 🔥 Ensures all input fields are the same width */
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+/* ✅ Adjust Button Size to Match */
+.auth-button {
+    width: 100%;
+    max-width: 350px; /* 🔥 Now buttons also align with inputs */
+    padding: 12px;
+    font-size: 16px;
+}
+
+/* ✅ Center Inputs & Buttons */
+.auth-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ✅ Results Grid */
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* ✅ Outfit Items Display */
 .outfit-items {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     gap: 10px;
+    justify-content: center;
 }
 
+/* ✅ Individual Outfit Item */
 .outfit-item {
     background: #f9f9f9;
     padding: 10px;
     border-radius: 5px;
     text-align: center;
     width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.outfit-item p {
-    font-size: 14px;
-    color: #555;
+/* ✅ Consistent Image Sizing for Clothing & Outfits */
+.result-card img,
+.outfit-item img {
+    width: 80px;
+    height: 80px;
+    border-radius: 5px;
+    object-fit: cover;
 }
 
+
+/* ================================== */
 /* ✅ Popup Styling */
+/* ================================== */
+/* ✅ Clothing Selection Popup */
 .popup {
     position: fixed;
-    top: 20%;
+    top: 10%;
     left: 50%;
-    transform: translate(-50%, -20%);
+    transform: translate(-50%, 0);
     background: white;
     padding: 20px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 300px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh; 
+    overflow-y: auto; 
     border-radius: 8px;
+    z-index: 1000;
 }
 
+/* ✅ Clothing Items Grid */
 .popup-content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 10px;
     margin-top: 10px;
+    justify-items: center;
+    overflow-y: auto; /* ✅ Enables scrolling inside the pop-up */
+    max-height: 60vh; /* 🔥 Prevents excessive height */
 }
 
-.clothing-item {
-    cursor: pointer;
-    padding: 10px;
-    text-align: center;
-    width: 120px;
-    border: 1px solid #ddd;
+/* ✅ Scrollable Pop-up */
+.popup::-webkit-scrollbar {
+    width: 6px;
+}
+
+.popup::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.popup::-webkit-scrollbar-thumb {
+    background: #888;
     border-radius: 5px;
-    transition: border-color 0.3s ease;
 }
 
-.clothing-item.selected {
-    border: 2px solid #007bff;
+.popup::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 /* ✅ Close Button */
@@ -241,947 +614,92 @@ html, body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-}
-
-.close-button:hover {
-    background: #0056b3;
-}
-
-.home-container {
-    text-align: center;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-}
-
-.home-container h2 {
-    font-size: 24px;
-    font-weight: 600;
-    color: #333;
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-.home-section {
-    width: 80%;
-    max-width: 500px;
-    padding: 15px;
-    border-radius: 10px;
-    background-color: #f8f8f8;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.items-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 10px;
-    flex-wrap: wrap;
-    width: 100%;
-    max-width: 90vw;
-    overflow-x: hidden;
-}
-
-.item {
-    text-align: center;
-}
-
-.item img {
-    width: 100px;
-    height: 100px;
-    border-radius: 5px;
-}
-
-
-/* ✅ Error Message */
-.error-message {
-    color: red;
-    font-size: 14px;
-    margin-bottom: 10px;
-}
-
-/* ✅ File Upload */
-.file-upload {
-    display: block;
-    font-size: 16px;
-    font-weight: 500;
-    color: #333;
-    background: #f8f8f8;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-.file-upload input {
-    display: none;
-}
-
-/* ✅ Image Preview */
-.image-preview {
-    margin-top: 10px;
-    text-align: center;
-}
-
-.image-preview img {
-    width: 100px;
-    height: 100px;
-    border-radius: 5px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* ✅ Primary Button */
-.primary-button {
-    width: 100%;
-    padding: 12px;
-    background: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background 0.3s;
-    margin-top: 10px;
-}
-
-.primary-button:hover {
-    background: #0056b3;
-}
-
-.primary-button:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-}
-
-
-
-
-/* ✅ Closet Container */
-.closet-container {
-    text-align: center;
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-/* ✅ Closet Title */
-.closet-container h2 {
-    font-size: 26px;
-    font-weight: 600;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* ✅ Closet Items Grid */
-.card-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* ✅ Grid Layout */
-    gap: 15px;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-}
-
-/* ✅ Closet Item Styling */
-.card-item {
-    background: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.2s ease-in-out;
-}
-
-.card-item:hover {
-    transform: scale(1.05);
-}
-
-.card-item img {
-    width: 100%;
-    border-radius: 5px;
-}
-
-/* ✅ Buttons */
-.edit-button, .delete-button {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: none;
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background 0.3s ease-in-out;
-}
-
-.edit-button {
-    background: #007BFF;
-    color: white;
-}
-
-.edit-button:hover {
-    background: #0056b3;
-}
-
-.delete-button {
-    background: #E74C3C;
-    color: white;
-}
-
-.delete-button:hover {
-    background: #C0392B;
-}
-
-/* ✅ Edit Form */
-.edit-form {
-    margin-top: 10px;
-    text-align: center;
-}
-
-.edit-form input {
-    width: 90%;
-    padding: 8px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-.primary-button {
-    width: 100%;
-    padding: 10px;
-    background: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background 0.3s;
-    margin-top: 10px;
-}
-
-.primary-button:hover {
-    background: #0056b3;
-}
-
-/* ✅ No Items Found */
-.no-items {
-    font-style: italic;
-    color: #888;
-    margin-top: 20px;
-}
-
-/* ✅ Responsive */
-@media (max-width: 600px) {
-    .closet-container {
-        width: 90%;
-    }
-
-    .card-container {
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* ✅ Smaller Grid for Mobile */
-    }
-
-    .card-item {
-        width: 160px;
-    }
-}
-
-
-
-/* ✅ Log Outfit Container */
-.auth-container {
-    text-align: center;
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* ✅ Selected Items Section */
-.selected-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.selected-item {
-    background: #fff;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 100px;
-}
-
-.selected-item img {
-    width: 80px;
-    height: 80px;
-    border-radius: 5px;
-}
-
-.selected-item p {
-    font-size: 14px;
-    margin-top: 5px;
-}
-
-/* ✅ Clothing Selection Popup */
-.popup {
-    position: fixed;
-    top: 15%;
-    left: 50%;
-    transform: translate(-50%, -15%);
-    background: white;
-    padding: 20px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 90%;
-    max-width: 350px;
-    border-radius: 8px;
-    z-index: 1000;
-}
-
-/* ✅ Clothing Items Grid */
-.popup-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 10px;
-    margin-top: 10px;
-    justify-items: center;
-}
-
-/* ✅ Clothing Item Style */
-.clothing-item {
-    cursor: pointer;
-    padding: 10px;
-    text-align: center;
-    width: 100px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    transition: border-color 0.3s ease;
-}
-
-.clothing-item img {
-    width: 80px;
-    height: 80px;
-    border-radius: 5px;
-}
-
-.clothing-item.selected {
-    border: 2px solid #007bff;
-    background: #f0f8ff;
-}
-
-/* ✅ Buttons */
-.auth-button, .save-button {
-    width: 100%;
-    padding: 12px;
-    background: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background 0.3s;
-    margin-top: 10px;
-}
-
-.auth-button:hover, .save-button:hover {
-    background: #0056b3;
-}
-
-/* ✅ Close Popup Button */
-.close-button {
-    margin-top: 10px;
-    padding: 10px;
-    width: 100%;
-    background: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
     transition: background 0.3s;
 }
 
 .close-button:hover {
-    background: #218838;
+    background: #0056b3;
 }
 
-/* ✅ Responsive */
+
+/* ================================== */
+/* ✅ Responsive Styles */
+/* ================================== */
+
 @media (max-width: 600px) {
+    .card-container, .outfit-container {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); 
+    }
+
+    .box {
+        max-width: 100%;
+    }
+
     .popup {
         width: 95%;
         max-width: 320px;
     }
-
-    .popup-content {
-        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-    }
-
-    .selected-item, .clothing-item {
-        width: 80px;
-    }
-
-    .clothing-item img, .selected-item img {
-        width: 70px;
-        height: 70px;
-    }
 }
 
+/* ================================== */
+/* ✅ Logout Page Styles (Matches Other Pages) */
+/* ================================== */
 
-
-/* ✅ Outfit History Container */
-.auth-container {
-    text-align: center;
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* ✅ Outfit Title */
-.auth-container h2 {
-    font-size: 24px;
-    font-weight: 600;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* ✅ Outfit Grid */
-.outfit-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* ✅ Grid Layout */
-    gap: 15px;
-    justify-content: center;
+.logout-container {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    margin-top: 20px;
-}
-
-/* ✅ Outfit Card */
-.outfit-card {
-    background: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.2s ease-in-out;
-}
-
-.outfit-card:hover {
-    transform: scale(1.05);
-}
-
-.outfit-card h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
-/* ✅ Outfit Items */
-.outfit-items {
-    display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
-}
-
-.outfit-item {
-    background: #f9f9f9;
-    padding: 10px;
-    border-radius: 5px;
+    height: 50vh; /* 🔥 Centers content vertically */
     text-align: center;
-    width: 100px;
-}
-
-.outfit-item img {
-    width: 100px;
-    height: 100px;
-    border-radius: 5px;
-    object-fit: cover;
-}
-
-/* ✅ Delete Button */
-.auth-button {
-    width: 100%;
-    padding: 10px;
-    background: #E74C3C;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background 0.3s ease-in-out;
-    margin-top: 10px;
-}
-
-.auth-button:hover {
-    background: #C0392B;
-}
-
-/* ✅ No Outfits Found */
-.no-outfits {
-    font-style: italic;
-    color: #888;
-    margin-top: 20px;
-}
-
-/* ✅ Responsive */
-@media (max-width: 600px) {
-    .outfit-container {
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    }
-
-    .outfit-card {
-        width: 160px;
-    }
-
-    .outfit-item {
-        width: 80px;
-    }
-
-    .outfit-item img {
-        width: 70px;
-        height: 70px;
-    }
-}
-
-
-/* ✅ Search Container */
-.auth-container {
-    text-align: center;
-    max-width: 400px;
-    margin: 50px auto;
     padding: 20px;
     background: white;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* ✅ Search Title */
-.auth-container h2 {
-    font-size: 24px;
-    font-weight: 600;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* ✅ Search Input */
-.search-bar {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-/* ✅ Filters */
-.filters {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.filters select {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-/* ✅ Search Button */
-.auth-button {
-    width: 100%;
-    padding: 10px;
-    background: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background 0.3s ease-in-out;
-    margin-top: 10px;
-}
-
-.auth-button:hover {
-    background: #0056b3;
-}
-
-/* ✅ Clothing & Outfit Results */
-.results-container {
-    margin-top: 20px;
-}
-
-/* ✅ Clothing & Outfit Items */
-.result-card {
-    background: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.2s ease-in-out;
-}
-
-.result-card:hover {
-    transform: scale(1.05);
-}
-
-/* ✅ Image Styling */
-.result-card img {
-    width: 100px;
-    height: 100px;
-    border-radius: 5px;
-    object-fit: cover;
-}
-
-/* ✅ Grid Layout */
-.results-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 15px;
-    margin-top: 20px;
-}
-
-/* ✅ No Results */
-.no-results {
-    font-style: italic;
-    color: #888;
-    margin-top: 20px;
-}
-
-/* ✅ Responsive */
-@media (max-width: 600px) {
-    .results-grid {
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    }
-}
-
-/* ✅ Auth Container */
-.auth-container {
-    text-align: center;
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* ✅ Auth Title */
-.auth-container h2 {
-    font-size: 24px;
-    font-weight: 600;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* ✅ Auth Input */
-.auth-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    margin: 8px 0;
-}
-
-/* ✅ Auth Button */
-.auth-button {
-    width: 100%;
-    padding: 10px;
-    background: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background 0.3s ease-in-out;
-    margin-top: 10px;
-}
-
-.auth-button:hover {
-    background: #0056b3;
-}
-
-/* ✅ Logout Button */
+/* ✅ Logout Button (Matches Other Buttons) */
 .logout-button {
     background: #E74C3C;
+    color: white;
+    padding: 12px 20px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 200px; /* 🔥 Ensures button size consistency */
 }
 
 .logout-button:hover {
     background: #C0392B;
+    transform: scale(1.05);
 }
 
-/* ✅ Error Message */
-.error-message {
-    color: red;
-    font-size: 14px;
-    margin-bottom: 10px;
-}
-
-/* ✅ Responsive */
-@media (max-width: 600px) {
-    .auth-container {
-        width: 90%;
-    }
-}
-
-
-/* ✅ Divider */
-.divider {
-    margin: 15px 0;
-    border: 0;
-    height: 1px;
-    background: #ddd;
-}
-
-/* ✅ Google Button */
-.google-button {
-    width: 100%;
-    padding: 12px;
-    background: #4285F4;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background 0.3s ease-in-out;
-    margin-top: 10px;
-}
-
-.google-button:hover {
-    background: #357ae8;
-}
-
-
-/* ✅ Logout Container */
-.logout-container {
-    text-align: center;
-    margin-top: 20px;
-}
-
-/* ✅ Success Message */
+/* ✅ Success Message (Consistent with Other Pages) */
 .success-message {
     color: green;
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 10px;
-    padding: 10px;
-    background: #d4edda;
-    border: 1px solid #c3e6cb;
-    border-radius: 5px;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    padding: 12px;
+    background: #D4EDDA;
+    border: 1px solid #C3E6CB;
+    border-radius: 6px;
     text-align: center;
+    max-width: 400px;
+    width: 100%;
     opacity: 1;
     transition: opacity 1s ease-in-out;
 }
 
-/* ✅ Logout Button */
-.logout-button {
-    background: #E74C3C;
-}
-
-.logout-button:hover {
-    background: #C0392B;
-}
-
-/* ✅ Home Container */
-.home-container {
-    text-align: center;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-}
-
-/* ✅ Home Title */
-.home-container h2 {
-    font-size: 24px;
-    font-weight: 600;
-    color: #333;
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-/* ✅ Recent Outfit Section */
-.home-section {
-    width: 80%;
-    max-width: 500px;
-    padding: 15px;
-    border-radius: 10px;
-    background-color: #f8f8f8;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-/* ✅ Outfit Items */
-.items-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 10px;
-    flex-wrap: wrap;
-    width: 100%;
-    max-width: 90vw;
-    overflow-x: hidden;
-}
-
-/* ✅ Individual Item */
-.item {
-    text-align: center;
-}
-
-.item img {
-    width: 100px;
-    height: 100px;
-    border-radius: 5px;
-    object-fit: cover;
-}
-
-.selected-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    transition: all 0.3s ease-in-out; /* Smooth transition when resetting */
-}
-
-.selected-item {
-    opacity: 1;
-    transition: opacity 0.2s ease-in-out;
-}
-
-.selected-item.hidden {
-    opacity: 0;
-}
-
-.success-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 128, 0, 0.8);
-    color: white;
-    padding: 15px;
-    border-radius: 8px;
-    font-size: 18px;
-    font-weight: bold;
-    z-index: 1000;
-    text-align: center;
-    animation: fadeOut 1.5s forwards;
-}
-
+/* ✅ Fade-Out Effect for Logout Message */
 @keyframes fadeOut {
     0% { opacity: 1; }
     80% { opacity: 1; }
     100% { opacity: 0; }
 }
 
-
-/* ✅ Centers the entire page content */
-.home-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: start;
-    padding: 20px;
-    width: 100%;
+.success-message.fade-out {
+    animation: fadeOut 3s forwards;
 }
-
-/* ✅ Centers Welcome Message */
-.welcome-message {
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 30px;
-    color: #222;
-    text-align: center;
-}
-
-/* ✅ 2x2 Grid Layout (Now Fully Balanced) */
-.home-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px; /* 🔥 Increased gap to fully separate left & right */
-    width: 90%;
-    max-width: 1200px;
-    justify-content: space-between; /* 🔥 Ensures left and right sides don’t overlap */
-}
-
-/* ✅ Left Column (Pushed Further Left) */
-.left-column {
-    display: flex;
-    flex-direction: column;
-    gap: 30px; /* 🔥 Added more space between boxes */
-    width: 100%;
-    align-items: flex-start;
-    margin-left: -50px; /* 🔥 Moves the left-side boxes further left */
-}
-
-/* ✅ Right Column (Balanced with Left) */
-.right-column {
-    display: flex;
-    flex-direction: column;
-    gap: 30px; /* ✅ Same spacing as left column */
-    width: 100%;
-    align-items: flex-end;
-    margin-right: -50px; /* 🔥 Moves the right-side boxes inward */
-}
-
-/* ✅ Standard Box Styling (Equal Sizes) */
-.box {
-    background: white;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-    text-align: center;
-    width: 100%;
-    max-width: 450px; /* 🔥 Slightly increased to make space fit perfectly */
-    min-height: 320px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-/* ✅ Image Styling (Perfect Sizing) */
-.outfit-item img, .item-img {
-    width: 50px;
-    height: 50px;
-    border-radius: 8px;
-    object-fit: cover;
-}
-
-/* ✅ Outfit Items Layout */
-.outfit-items {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-top: 10px;
-}
-
-/* ✅ Text inside Boxes */
-.box h3 {
-    font-size: 20px;
-    margin-bottom: 10px;
-}
-
-.box p {
-    font-size: 14px;
-    margin-top: 5px;
-    color: #444;
-}
-
