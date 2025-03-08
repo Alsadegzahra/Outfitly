@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../firebase"; 
-import { collection, onSnapshot, doc, updateDoc, deleteDoc } from "firebase/firestore";
+import { getFirestore, query, collection, onSnapshot, doc, updateDoc, deleteDoc } from "firebase/firestore";
 import "../styles.css";
 
 const categories = ["Top", "Bottom", "Shoes", "Outerwear", "Accessories", "Dress", "Activewear", "Sleepwear"];
