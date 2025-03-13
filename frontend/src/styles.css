@@ -5,6 +5,7 @@
 html, body {
   font-family: 'Inter', sans-serif;
   background: white;
+    background-color: white !important;
   color: #333;
   margin: 0;
   padding: 0;
@@ -732,4 +733,21 @@ h1, h2, h3 {
 
 .success-message.fade-out {
     animation: fadeOut 3s forwards;
+}
+
+
+
+.image-preview {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.image-preview img {
+    max-width: 200px;  /* Adjust to your preferred size */
+    max-height: 200px;
+    border-radius: 8px;
+    object-fit: contain;
+    border: 1px solid #ddd;
+    padding: 5px;
 }

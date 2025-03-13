@@ -1,19 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const { db } = require("../firebase"); 
-const { collection, getDocs, query, where } = require("firebase-admin/firestore");
+const { getFirestore } = require("firebase-admin/firestore");
+
+// Initialize Firestore
+const db = getFirestore();
 
 /**
  * @route GET /api/search
  * @desc Search for clothing items and outfits in Firestore based on query and filters
  * @access Public
- *
- * @param {Object} req - Express request object.
- * @param {string} [req.query.q] - Search query string.
- * @param {string} [req.query.category] - Filter by clothing category.
- * @param {string} [req.query.color] - Filter by clothing color.
- * @param {Object} res - Express response object.
- * @returns {Object} - Object containing matching clothing items and outfits.
  */
 router.get("/", async (req, res) => {
     try {
@@ -22,23 +17,22 @@ router.get("/", async (req, res) => {
 
         console.log("🔍 Search Query:", searchQuery, "🛍️ Filters:", { category, color });
 
-        let clothingQuery = collection(db, "clothing");
-        let clothingFilters = [];
+        // 🔹 Build Clothing Query
+        let clothingRef = db.collection("clothing");
+        let clothingQuery = clothingRef;
 
-        if (searchQuery.trim()) clothingFilters.push(where("name", ">=", searchQuery));
-        if (category) clothingFilters.push(where("category", "==", category));
-        if (color) clothingFilters.push(where("color", "==", color));
+        if (searchQuery.trim()) clothingQuery = clothingQuery.where("name", ">=", searchQuery);
+        if (category) clothingQuery = clothingQuery.where("category", "==", category);
+        if (color) clothingQuery = clothingQuery.where("color", "==", color);
 
-        if (clothingFilters.length > 0) clothingQuery = query(clothingQuery, ...clothingFilters);
-
-        const clothingSnapshot = await getDocs(clothingQuery);
+        const clothingSnapshot = await clothingQuery.get();
         const clothingItems = clothingSnapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data(),
         }));
 
-        const outfitQuery = collection(db, "outfits");
-        const outfitSnapshot = await getDocs(outfitQuery);
+        // 🔹 Get Outfits & Filter
+        const outfitSnapshot = await db.collection("outfits").get();
 
         const outfits = await Promise.all(
             outfitSnapshot.docs.map(async (outfitDoc) => {
@@ -47,8 +41,8 @@ router.get("/", async (req, res) => {
 
                 const itemData = await Promise.all(
                     itemRefs.map(async (itemId) => {
-                        const itemDoc = await getDocs(query(collection(db, "clothing"), where("id", "==", itemId)));
-                        return itemDoc.docs.length > 0 ? { id: itemId, ...itemDoc.docs[0].data() } : null;
+                        const itemQuery = await db.collection("clothing").where("id", "==", itemId).get();
+                        return itemQuery.docs.length > 0 ? { id: itemId, ...itemQuery.docs[0].data() } : null;
                     })
                 );
 
@@ -67,7 +61,7 @@ router.get("/", async (req, res) => {
         res.json({ clothing: clothingItems, outfits: outfits.filter(outfit => outfit) });
     } catch (error) {
         console.error("❌ Error searching:", error);
-        res.status(500).json({ error: "Error searching" });
+        res.status(500).json({ error: "Error searching Firestore" });
     }
 });
 

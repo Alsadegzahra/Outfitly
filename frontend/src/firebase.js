@@ -3,6 +3,7 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 
+
 /**
  * Firebase configuration object containing API credentials.
  * @constant {Object}

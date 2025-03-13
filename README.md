@@ -1,6 +1,6 @@
 # Outfitly
 
-Outfitly is a digital closet and outfit management web app that helps users organize their wardrobe, log outfits, and track their outfit history. The app uses **React** for the frontend, **Firebase Firestore** for the database, **Firebase Functions** for backend API, and **Firebase Authentication** for user login.
+Outfitly is a digital closet and outfit management web app that helps users organize their wardrobe, log outfits, and track their outfit history. The app uses **React** for the frontend, Node.js + Express for backend, **Firebase Firestore** for the database, **Firebase Functions** for backend API, and **Firebase Authentication** for user login.
 
 ## Project Structure
 
@@ -8,25 +8,27 @@ The project follows a modular structure for maintainability and scalability:
 
 ```
 /Outfitly
-│── backend/               # Backend (Firebase Functions & Express API)
-│   ├── index.js          # Main Express server & Firebase Functions
-│   ├── routes/           # API routes
-│   ├── firebase.js       # Firebase Admin SDK setup
-│   ├── package.json      # Backend dependencies
+│── backend/               # Backend (Node.js & Express API, Firebase Functions)
+│   ├── index.js           # Main Express server & Firebase Functions integration
+│   ├── routes/            # API route handlers
+│   ├── tests/             # Tests
+│   ├── firebase.js        # Firebase Admin SDK setup
+│   └── package.json       # Backend dependencies
 │
-│── frontend/             # Frontend (React)
+│── frontend/              # Frontend (React)
 │   ├── src/
-│   │   ├── components/   # UI components (Navbar, Closet, etc.)
-│   │   ├── pages/        # Application pages (Home, AddClothing, etc.)
-│   │   ├── firebase.js   # Firebase client-side config
-│   ├── public/           # Static files (index.html, manifest.json, etc.)
-│   ├── package.json      # Frontend dependencies
-│   ├── styles.css        # Global styles
+│   │   ├── __tests__/     # Tests
+│   │   ├── components/    # UI components (Navbar, Closet, etc.)
+│   │   ├── pages/         # Application pages (Home, AddClothing, etc.)
+│   │   └── firebase.js    # Firebase client-side config
+│   ├── public/            # Static files (index.html, manifest.json, etc.)
+│   ├── package.json       # Frontend dependencies
+│   └── styles.css         # Global styles
 │
-│── .firebaserc           # Firebase project settings
-│── firebase.json         # Firebase hosting & function settings
-│── .gitignore            # Git ignored files and folders
-│── README.md             # Project documentation
+│── .firebaserc            # Firebase project settings
+│── firebase.json          # Firebase hosting & function settings
+│── .gitignore             # Files and folders to ignore in version control
+│── README.md              # Project documentation
 ```
 
 ## How to Run the Application Locally
@@ -97,7 +99,4 @@ firebase deploy --only functions
 
 ## Contributors
 
-- **Zahra Alsadeg** (Lead Developer)
-- **Mentor:** *[Add mentor’s name if applicable]*
-
----
+- **Zahra Alsadeg**

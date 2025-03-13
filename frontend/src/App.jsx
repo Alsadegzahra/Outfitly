@@ -26,7 +26,10 @@ const pageTransition = {
   exit: { opacity: 0, y: -10, transition: { duration: 0.3 } }
 };
 
+
+
 const App = () => {
+  
   return (
     <Router>
       <div className="app-container bg-gradient-to-br from-pink-100 via-blue-50 to-purple-100 text-gray-800 min-h-screen flex flex-col">
