@@ -4,11 +4,16 @@ import Closet from "../pages/Closet";
 import "@testing-library/jest-dom";
 import { useState } from "react";
 
-// ✅ Mock Closet component with an empty option
+/**
+ * Mock Closet component for testing.
+ * @param {Object} props - Component properties.
+ * @param {boolean} [props.startEmpty=false] - Determines if the closet starts empty.
+ * @returns {JSX.Element} Mock Closet component.
+ */
 const MockCloset = ({ startEmpty = false }) => {
   const [clothing, setClothing] = useState(
     startEmpty
-      ? [] // Empty Closet
+      ? []
       : [
           { id: "1", name: "Black Jacket", category: "Outerwear", color: "Black" },
           { id: "2", name: "Blue Jeans", category: "Bottom", color: "Blue" },
@@ -17,18 +22,25 @@ const MockCloset = ({ startEmpty = false }) => {
 
   const [editItem, setEditItem] = useState(null);
 
+  /**
+   * Toggles the edit form visibility for a clothing item.
+   * @param {Object} item - Clothing item to edit.
+   */
   const toggleEditForm = (item) => {
     setEditItem(editItem?.id === item.id ? null : item);
   };
 
+  /**
+   * Clears all clothing items from the closet.
+   */
   const clearCloset = () => {
-    setClothing([]); // Simulates deleting all items
+    setClothing([]);
   };
 
   return (
     <div className="closet-container">
       <h2>My Closet</h2>
-      <button onClick={clearCloset}>Clear Closet</button> {/* Clears all clothing */}
+      <button onClick={clearCloset}>Clear Closet</button>
       <div className="card-container">
         {clothing.length > 0 ? (
           clothing.map((item) => (
@@ -48,9 +60,10 @@ const MockCloset = ({ startEmpty = false }) => {
   );
 };
 
-// ✅ Run frontend-only tests
-describe("Closet Component (Frontend Only)", () => {
-  // ✅ Test 1: Closet Renders with Items
+/**
+ * Test suite for Closet component.
+ */
+describe("Closet Component", () => {
   test("displays clothing items correctly", async () => {
     render(<MockCloset />);
     await waitFor(() => {
@@ -59,21 +72,15 @@ describe("Closet Component (Frontend Only)", () => {
     });
   });
 
-  // ✅ Test 2: Closet Shows "No Clothing Items" When Empty (Manually Cleared)
-  test("displays 'No clothing items found' message when closet is cleared", async () => {
-    render(<MockCloset />); // Start with items
-
-    // Click "Clear Closet" button
+  test("displays 'No clothing items found' when closet is cleared", async () => {
+    render(<MockCloset />);
     userEvent.click(screen.getByText(/Clear Closet/i));
-
-    // Wait for items to be removed
     await waitFor(() => {
       expect(screen.getByText(/No clothing items found/i)).toBeInTheDocument();
     });
   });
 
-  // ✅ Test 3: Clicking Edit Button Opens Edit Form
-  test("clicking first edit button displays edit form", async () => {
+  test("clicking edit button displays edit form", async () => {
     render(<MockCloset />);
     const editButton = screen.getAllByText(/Edit/i)[0];
     userEvent.click(editButton);
@@ -82,22 +89,19 @@ describe("Closet Component (Frontend Only)", () => {
     });
   });
 
-  // ✅ Test 4: Clicking Cancel Hides Edit Form
-  test("clicking cancel hides edit form", async () => {
+  test("clicking edit button again hides edit form", async () => {
     render(<MockCloset />);
     const editButton = screen.getAllByText(/Edit/i)[0];
     userEvent.click(editButton);
     await waitFor(() => {
       expect(screen.getByText(/Edit Form Visible/i)).toBeInTheDocument();
     });
-
-    userEvent.click(editButton); // Clicking again cancels
+    userEvent.click(editButton);
     await waitFor(() => {
       expect(screen.queryByText(/Edit Form Visible/i)).not.toBeInTheDocument();
     });
   });
 
-  // ✅ Test 5: Closet Has Delete Buttons
   test("each clothing item has a delete button", async () => {
     render(<MockCloset />);
     await waitFor(() => {
